@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Concerms\Transformers;
+namespace App\Support\Concerns\Transformers;
 
 use Illuminate\Support\Arr;
 
