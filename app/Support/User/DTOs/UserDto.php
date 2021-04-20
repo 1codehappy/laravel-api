@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Support\User\Data;
+namespace App\Support\User\DTOs;
 
-use App\Support\Contracts\DataTransferObjects\Item;
+use App\Support\Contracts\DTOs\Item;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserData extends Item
+class UserDto extends Item
 {
     /**
      * The user's name
      *
-     * @var string|null
+     * @var string
      */
-    public ?string $name;
+    public string $name;
 
     /**
      * The user's email
      *
-     * @var string|null
+     * @var string
      */
-    public ?string $email;
+    public string $email;
 
     /**
      * The user's password

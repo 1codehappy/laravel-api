@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Contracts\DataTransferObjects;
+namespace App\Support\Contracts\DTOs;
 
 use Spatie\DataTransferObject\DataTransferObject;
 

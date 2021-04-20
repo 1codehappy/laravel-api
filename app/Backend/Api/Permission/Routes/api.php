@@ -1,46 +1,42 @@
 <?php
 
-use App\Backend\Api\User\Controllers\UserController;
+use App\Backend\Api\Permission\Controllers\PermissionController;
+use App\Backend\Api\Permission\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('api')
+Route::middleware(['api', 'auth:api'])
     ->group(function () {
         Route::prefix('roles')
             ->group(function () {
-                Route::get('', [UserController::class, 'index'])
-                    ->name('roles.index')
+                Route::middleware('permission:permissions.read')
+                    ->group(function () {
+                        Route::get('', [RoleController::class, 'index'])
+                            ->name('roles.index')
+                        ;
+                        Route::get('{role}', [RoleController::class, 'show'])
+                            ->name('roles.show')
+                        ;
+                    })
                 ;
-                Route::get('{role}', [UserController::class, 'show'])
-                    ->name('roles.show')
-                ;
-                Route::post('', [UserController::class, 'store'])
+                Route::post('', [RoleController::class, 'store'])
                     ->name('roles.store')
+                    ->middleware('permission:roles.create')
                 ;
-                Route::put('{role}', [UserController::class, 'update'])
+                Route::put('{role}', [RoleController::class, 'update'])
                     ->name('roles.update')
+                    ->middleware('permission:roles.update')
                 ;
-                Route::delete('{role}', [UserController::class, 'destroy'])
+                Route::delete('{role}', [RoleController::class, 'destroy'])
                     ->name('roles.destroy')
+                    ->middleware('permission:roles.delete')
                 ;
             })
         ;
 
         Route::prefix('permissions')
             ->group(function () {
-                Route::get('', [UserController::class, 'index'])
+                Route::get('', [PermissionController::class, 'index'])
                     ->name('permissions.index')
-                ;
-                Route::get('{permission}', [UserController::class, 'show'])
-                    ->name('permissions.show')
-                ;
-                Route::post('', [UserController::class, 'store'])
-                    ->name('permissions.store')
-                ;
-                Route::put('{permission}', [UserController::class, 'update'])
-                    ->name('permissions.update')
-                ;
-                Route::delete('{permission}', [UserController::class, 'destroy'])
-                    ->name('permissions.destroy')
                 ;
             })
         ;

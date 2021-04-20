@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Api\Permission\Request;
+namespace App\Backend\Api\Permission\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PermissionStore extends FormRequest
+class RoleUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class PermissionStore extends FormRequest
      */
     public function authorize()
     {
-        return request()->count() > 0;
+        return $this->request->count() > 0;
     }
 
     /**
@@ -25,6 +25,7 @@ class PermissionStore extends FormRequest
     {
         return [
             'name' => 'required|max:255',
+            'permissions' => 'sometimes|array',
         ];
     }
 }

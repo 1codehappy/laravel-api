@@ -3,6 +3,8 @@
 namespace App\Support\Core\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Config;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,6 +28,33 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+    /**
+     * {@inheritDoc}
+     */
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof NotFoundHttpException) {
+            return response()
+                ->json([
+                    'message' => 'Not found.',
+                ],
+                404
+            );
+        }
+
+        $data = [];
+        $data['message'] = $exception->getMessage();
+        if (! in_array(Config::get('app.env'), ['prod', 'production'])) {
+            $data['trace'] = explode("\n", $exception->getTraceAsString());
+        }
+        return response()
+            ->json(
+                $data,
+                $exception->getCode() ?: 500
+            )
+        ;
+    }
 
     /**
      * Register the exception handling callbacks for the application.

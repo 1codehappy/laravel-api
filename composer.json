@@ -19,7 +19,8 @@
         "spatie/data-transfer-object": "^2.8",
         "spatie/laravel-fractal": "^5.8",
         "spatie/laravel-permission": "^4.0",
-        "spatie/laravel-query-builder": "^3.3"
+        "spatie/laravel-query-builder": "^3.3",
+        "tymon/jwt-auth": "^1.0.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.9",

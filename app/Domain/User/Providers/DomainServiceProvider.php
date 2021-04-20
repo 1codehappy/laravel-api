@@ -12,6 +12,7 @@ class DomainServiceProvider extends ServiceProvider
      * @var array
      */
     protected $routes = [
+        'Backend/Api/Auth/Routes/api.php',
         'Backend/Api/User/Routes/api.php',
     ];
 }

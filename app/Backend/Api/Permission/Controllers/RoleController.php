@@ -2,8 +2,8 @@
 
 namespace App\Backend\Api\Permission\Controllers;
 
-use App\Backend\Api\Permission\Request\RoleStore;
-use App\Backend\Api\Permission\Request\RoleUpdate;
+use App\Backend\Api\Permission\Requests\RoleStore;
+use App\Backend\Api\Permission\Requests\RoleUpdate;
 use App\Backend\Api\Permission\Transformers\RoleTransformer;
 use App\Domain\Permission\Actions\CreateRole;
 use App\Domain\Permission\Actions\DeleteRole;
@@ -11,12 +11,12 @@ use App\Domain\Permission\Actions\EditRole;
 use App\Domain\Permission\Actions\PaginateRole;
 use App\Domain\Permission\Models\Role;
 use App\Support\Core\Api\Controllers\Controller;
-use App\Support\Permission\Data\RoleData;
+use App\Support\Permission\DTOs\RoleDto;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PermissionController extends Controller
+class RoleController extends Controller
 {
     /**
      * List roles
@@ -56,7 +56,7 @@ class PermissionController extends Controller
      */
     public function store(RoleStore $request, CreateRole $action): JsonResponse
     {
-        $data = RoleData::fromRequest($request);
+        $data = RoleDto::fromRequest($request);
         $role = DB::transaction(function () use ($action, $data) {
             return $action->execute($data);
         });
@@ -76,7 +76,7 @@ class PermissionController extends Controller
      */
     public function update(RoleUpdate $request, Role $role, EditRole $action): JsonResponse
     {
-        $data = RoleData::fromRequest($request);
+        $data = RoleDto::fromRequest($request);
         $role = DB::transaction(function () use ($action, $data, $role) {
             return $action->execute($data, $role);
         });

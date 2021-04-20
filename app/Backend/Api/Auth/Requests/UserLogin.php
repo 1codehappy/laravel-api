@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Api\Permission\Request;
+namespace App\Backend\Api\Auth\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PermissionUpdate extends FormRequest
+class UserLogin extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class PermissionUpdate extends FormRequest
      */
     public function authorize()
     {
-        return request()->count() > 0;
+        return $this->request->count() > 0;
     }
 
     /**
@@ -24,7 +24,8 @@ class PermissionUpdate extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:8|max:255',
         ];
     }
 }

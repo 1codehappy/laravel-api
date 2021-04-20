@@ -11,7 +11,7 @@ use App\Domain\User\Actions\EditUser;
 use App\Domain\User\Actions\PaginateUser;
 use App\Domain\User\Models\User;
 use App\Support\Core\Api\Controllers\Controller;
-use App\Support\User\Data\UserData;
+use App\Support\User\DTOs\UserDto;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +28,6 @@ class UserController extends Controller
     public function index(Request $request, PaginateUser $action): JsonResponse
     {
         $users = $action->execute(50, $request->query());
-
         return fractal($users, new UserTransformer())
             ->respond()
         ;
@@ -56,7 +55,7 @@ class UserController extends Controller
      */
     public function store(UserStore $request, CreateUser $action): JsonResponse
     {
-        $data = UserData::fromRequest($request);
+        $data = UserDto::fromRequest($request);
         $user = DB::transaction(function () use ($action, $data) {
             return $action->execute($data);
         });
@@ -76,7 +75,7 @@ class UserController extends Controller
      */
     public function update(UserUpdate $request, User $user, EditUser $action): JsonResponse
     {
-        $data = UserData::fromRequest($request);
+        $data = UserDto::fromRequest($request);
         $user = DB::transaction(function () use ($action, $data, $user) {
             return $action->execute($data, $user);
         });
