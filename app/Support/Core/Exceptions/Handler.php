@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -62,6 +63,9 @@ class Handler extends ExceptionHandler
             if ($exception instanceof ValidationException) {
                 $statusCode = 422;
                 $data['errors'] = $exception->errors();
+            }
+            if (Config::get('app.debug') === true) {
+                $data['trace'] = explode("\n", $exception->getTraceAsString());
             }
             return response()->json($data, $statusCode);
         }
