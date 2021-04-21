@@ -29,7 +29,10 @@ class RoleController extends Controller
     {
         $roles = $action->execute(50, $request->query());
 
-        return fractal($roles, new RoleTransformer())
+        return fractal(
+                $roles,
+                new RoleTransformer()
+            )
             ->respond()
         ;
     }
@@ -42,7 +45,10 @@ class RoleController extends Controller
      */
     public function show(Role $role): JsonResponse
     {
-        return fractal($role, new RoleTransformer())
+        return fractal(
+                $role,
+                new RoleTransformer()
+            )
             ->respond()
         ;
     }
@@ -61,7 +67,10 @@ class RoleController extends Controller
             return $action->execute($data);
         });
 
-        return fractal($role, new RoleTransformer())
+        return fractal(
+                $role,
+                new RoleTransformer()
+            )
             ->respond(201)
         ;
     }
@@ -81,7 +90,10 @@ class RoleController extends Controller
             return $action->execute($data, $role);
         });
 
-        return fractal($role, new RoleTransformer())
+        return fractal(
+                $role,
+                new RoleTransformer()
+            )
             ->respond()
         ;
     }

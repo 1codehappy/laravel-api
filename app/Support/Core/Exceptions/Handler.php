@@ -2,8 +2,13 @@
 
 namespace App\Support\Core\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Http\Exceptions\PostTooLargeException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -35,25 +40,33 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof NotFoundHttpException) {
-            return response()
-                ->json([
-                    'message' => 'Not found.',
-                ],
-                404
-            );
+            return response()->json(['message' => 'Not found.'], 404);
+        }
+        if ($request->expectsJson()) {
+            $data = [];
+            $data['message'] = $exception->getMessage();
+            $statusCode = 500;
+            if ($exception instanceof PostTooLargeException) {
+                $statusCode = 400;
+            }
+            if ($exception instanceof AuthenticationException) {
+                $data['message'] = 'Unauthorized.';
+                $statusCode = 401;
+            }
+            if ($exception instanceof ThrottleRequestsException) {
+                $statusCode = 429;
+            }
+            if ($exception instanceof ModelNotFoundException) {
+                $statusCode = 404;
+            }
+            if ($exception instanceof ValidationException) {
+                $statusCode = 422;
+                $data['errors'] = $exception->errors();
+            }
+            return response()->json($data, $statusCode);
         }
 
-        $data = [];
-        $data['message'] = $exception->getMessage();
-        if (! in_array(Config::get('app.env'), ['prod', 'production'])) {
-            $data['trace'] = explode("\n", $exception->getTraceAsString());
-        }
-        return response()
-            ->json(
-                $data,
-                $exception->getCode() ?: 500
-            )
-        ;
+        return parent::render($request, $exception);
     }
 
     /**

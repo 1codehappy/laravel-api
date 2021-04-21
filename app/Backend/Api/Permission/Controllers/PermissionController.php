@@ -16,7 +16,10 @@ class PermissionController extends Controller
      */
     public function index(): JsonResponse
     {
-        return fractal(Permission::all(), new PermissionTransformer())
+        return fractal(
+                Permission::all(),
+                new PermissionTransformer()
+            )
             ->respond()
         ;
     }

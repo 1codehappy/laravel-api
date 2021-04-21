@@ -22,7 +22,7 @@ class AuthController extends Controller
         if (! $token = Auth::attempt($credentials)) {
             return response()
                 ->json([
-                    'message' => 'Unauthorized.',
+                    'message' => 'Invalid credentials.',
                 ], 401)
             ;
         }
@@ -82,7 +82,7 @@ class AuthController extends Controller
             'message' => 'Token generated.',
             'data' => [
                 'access_token' => $token,
-                'token_type' => 'bearer',
+                'token_type' => 'Bearer',
                 'expires_in' => Auth::factory()->getTTL() * 60,
             ],
         ], 201);
