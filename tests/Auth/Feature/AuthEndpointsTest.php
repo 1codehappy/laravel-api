@@ -40,7 +40,7 @@ class AuthEndpointsTest extends TestCase
     public function it_gets_invalid_credentials(): void
     {
         $response = $this->json('POST', '/auth/login', [
-            'email' => $this->faker()->safeEmail,
+            'email' => $this->faker()->email,
             'password' => $this->faker()->password,
         ]);
         $response
@@ -138,7 +138,7 @@ class AuthEndpointsTest extends TestCase
         $response
             ->assertStatus(401)
             ->assertJson([
-                'message' => 'Unauthorized.',
+                'message' => 'Unauthenticated.',
             ])
         ;
     }
@@ -174,7 +174,7 @@ class AuthEndpointsTest extends TestCase
         $response
             ->assertStatus(401)
             ->assertJson([
-                'message' => 'Unauthorized.',
+                'message' => 'Unauthenticated.',
             ])
         ;
     }

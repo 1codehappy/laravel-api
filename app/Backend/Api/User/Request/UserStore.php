@@ -13,7 +13,7 @@ class UserStore extends FormRequest
      */
     public function authorize()
     {
-        return request()->count() > 0;
+        return $this->request->count() > 0;
     }
 
     /**
@@ -27,6 +27,8 @@ class UserStore extends FormRequest
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'sometimes|min:8|confirmed',
+            'roles' => 'sometimes|nullable|array',
+            'permissions' => 'sometimes|nullable|array',
         ];
     }
 }

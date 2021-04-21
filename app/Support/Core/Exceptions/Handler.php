@@ -4,10 +4,10 @@ namespace App\Support\Core\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -21,7 +21,12 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Illuminate\Auth\AuthenticationException::class,
+        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+        \Illuminate\Session\TokenMismatchException::class,
+        \Illuminate\Validation\ValidationException::class,
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
     ];
 
     /**
@@ -43,34 +48,46 @@ class Handler extends ExceptionHandler
         if ($exception instanceof NotFoundHttpException) {
             return response()->json(['message' => 'Not found.'], 404);
         }
-        if ($request->expectsJson()) {
-            $data = [];
-            $data['message'] = $exception->getMessage();
-            $statusCode = 500;
-            if ($exception instanceof PostTooLargeException) {
-                $statusCode = 400;
-            }
-            if ($exception instanceof AuthenticationException) {
-                $data['message'] = 'Unauthorized.';
-                $statusCode = 401;
-            }
-            if ($exception instanceof ThrottleRequestsException) {
-                $statusCode = 429;
-            }
-            if ($exception instanceof ModelNotFoundException) {
-                $statusCode = 404;
-            }
-            if ($exception instanceof ValidationException) {
-                $statusCode = 422;
-                $data['errors'] = $exception->errors();
-            }
-            if (Config::get('app.debug') === true) {
-                $data['trace'] = explode("\n", $exception->getTraceAsString());
-            }
-            return response()->json($data, $statusCode);
+        if ($exception instanceof PostTooLargeException) {
+            return $this->throws($exception, 413);
+        }
+        if ($exception instanceof AuthenticationException) {
+            return $this->throws($exception, 401);
+        }
+        if ($exception instanceof ThrottleRequestsException) {
+            return $this->throws($exception, 429);
+        }
+        if ($exception instanceof ModelNotFoundException) {
+            return $this->throws($exception, 404);
+        }
+        if ($exception instanceof ValidationException) {
+            return $this->throws($exception, 422);
         }
 
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Throws api exception
+     *
+     * @param Throwable $exception
+     * @param integer $statusCode
+     * @return JsonResponse
+     */
+    protected function throws(
+        Throwable $exception,
+        int $statusCode = 500
+    ): JsonResponse {
+        $data = [];
+        $data['message'] = $exception->getMessage();
+        if ($statusCode === 422) {
+            /** @var ValidationException $exception */
+            $data['errors'] = $exception->errors();
+        }
+        if (Config::get('app.debug') === true) {
+            $data['trace'] = explode("\n", $exception->getTraceAsString());
+        }
+        return response()->json($data, $statusCode);
     }
 
     /**

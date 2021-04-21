@@ -32,7 +32,7 @@ class UserEndpointsTest extends TestCase
             ->withHeaders([
                 'Authorization' => 'Bearer ' . Auth::login($user),
             ])
-            ->json('GET', '/users?limit=10&page=2')
+            ->json('GET', '/users?per_page=10&page=2')
         ;
         $response
             ->assertHeader('Content-Type', 'application/json')
@@ -140,7 +140,7 @@ class UserEndpointsTest extends TestCase
             ->count(10)
             ->create()
         ;
-        $sortedFields = ['name', 'email', 'created_at'];
+        $sortedFields = ['name', 'created_at'];
         $orientation = ['', '-'];
         foreach ($sortedFields as $sortedField) {
             foreach ($orientation as $concat) {

@@ -14,7 +14,7 @@ class UserUpdate extends FormRequest
      */
     public function authorize()
     {
-        return request()->count() > 0;
+        return $this->request->count() > 0;
     }
 
     /**
@@ -30,6 +30,8 @@ class UserUpdate extends FormRequest
         return [
             'name' => 'sometimes|required|max:255',
             'email' => 'sometimes|required|email|unique:users,email,' . $userId,
+            'roles' => 'sometimes|nullable|array',
+            'permissions' => 'sometimes|nullable|array',
         ];
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Backend\Api\Permission\Transformers;
 
 use App\Domain\Permission\Models\Permission;
-use App\Support\Concerms\Transformers\AddsTransformerCapabilities;
+use App\Support\Concerns\Transformers\AddsTransformerCapabilities;
 use League\Fractal\TransformerAbstract;
 
 class PermissionTransformer extends TransformerAbstract

@@ -10,16 +10,16 @@ class UserDto extends Item
     /**
      * The user's name
      *
-     * @var string
+     * @var string|null
      */
-    public string $name;
+    public ?string $name;
 
     /**
      * The user's email
      *
-     * @var string
+     * @var string|null
      */
-    public string $email;
+    public ?string $email;
 
     /**
      * The user's password
@@ -27,6 +27,20 @@ class UserDto extends Item
      * @var string|null
      */
     public ?string $password;
+
+    /**
+     * The roles of user
+     *
+     * @var array|null
+     */
+    public ?array $roles;
+
+    /**
+     * The permissions of user
+     *
+     * @var array|null
+     */
+    public ?array $permissions;
 
     /**
      * Create data from request
@@ -40,6 +54,8 @@ class UserDto extends Item
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => $request->get('password'),
+            'roles' => $request->get('roles'),
+            'permissions' => $request->get('permissions'),
         ]);
     }
 }

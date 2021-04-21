@@ -27,7 +27,10 @@ class UserController extends Controller
      */
     public function index(Request $request, PaginateUser $action): JsonResponse
     {
-        $users = $action->execute(50, $request->query());
+        $users = $action->execute(
+            $request->get('per_page') ?? 50,
+            $request->query()
+        );
         return fractal($users, new UserTransformer())
             ->respond()
         ;
@@ -73,8 +76,11 @@ class UserController extends Controller
      * @param EditUser $action
      * @return JsonResponse
      */
-    public function update(UserUpdate $request, User $user, EditUser $action): JsonResponse
-    {
+    public function update(
+        UserUpdate $request,
+        User $user,
+        EditUser $action
+    ): JsonResponse {
         $data = UserDto::fromRequest($request);
         $user = DB::transaction(function () use ($action, $data, $user) {
             return $action->execute($data, $user);
