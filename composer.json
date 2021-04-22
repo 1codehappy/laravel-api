@@ -1,10 +1,14 @@
 {
-    "name": "laravel/laravel",
+    "name": "1codehappy/laravel-api",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "The Boilerplate for Laravel Restful Apis.",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "api",
+        "restful",
+        "ddd",
+        "hexagonal"
     ],
     "license": "MIT",
     "require": {
@@ -23,6 +27,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.9",
+        "brianium/paratest": "^6.2",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^2.18",
