@@ -8,7 +8,7 @@ Route::middleware(['api', 'auth:api'])
     ->group(function () {
         Route::prefix('roles')
             ->group(function () {
-                Route::middleware('permission:permissions.read')
+                Route::middleware('permission:roles.read')
                     ->group(function () {
                         Route::get('', [RoleController::class, 'index'])
                             ->name('roles.index')
@@ -37,6 +37,7 @@ Route::middleware(['api', 'auth:api'])
             ->group(function () {
                 Route::get('', [PermissionController::class, 'index'])
                     ->name('permissions.index')
+                    ->middleware('permission:permissions.read')
                 ;
             })
         ;

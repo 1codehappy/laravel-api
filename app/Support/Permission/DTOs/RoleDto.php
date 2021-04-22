@@ -15,11 +15,18 @@ class RoleDto extends Item
     public ?string $name;
 
     /**
+     * The guard's name of role
+     *
+     * @var string|null
+     */
+    public ?string $guard_name;
+
+    /**
      * The role's permissions
      *
      * @var array|null
      */
-    public string $permissions;
+    public ?array $permissions;
 
     /**
      * Check this role has permissions

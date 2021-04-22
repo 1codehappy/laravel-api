@@ -29,6 +29,13 @@ class UserDto extends Item
     public ?string $password;
 
     /**
+     * The timestamp of email verification
+     *
+     * @var string|null
+     */
+    public ?string $email_verified_at;
+
+    /**
      * The roles of user
      *
      * @var array|null

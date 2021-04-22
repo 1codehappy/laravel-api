@@ -4,7 +4,6 @@ namespace App\Domain\User\Actions;
 
 use App\Domain\User\Models\User;
 use App\Support\User\DTOs\UserDto;
-use Illuminate\Support\Arr;
 
 class CreateUser
 {

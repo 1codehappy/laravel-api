@@ -21,6 +21,7 @@ class RoleTransformer extends TransformerAbstract
         return $this->transformed([
             'id' => $role->uuid,
             'name' => $role->name,
+            'permissions' => $role->permissions->pluck('uuid'),
             'created_at' => $role->present()->createdAt,
             'updated_at' => $role->present()->updatedAt,
         ]);

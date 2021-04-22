@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\User\Database\Seeders;
+namespace App\Domain\Permission\Database\Seeders;
 
 use App\Domain\Permission\Models\Permission;
 use Illuminate\Database\Seeder;
@@ -8,15 +8,16 @@ use Illuminate\Database\Seeder;
 class PermissionsTableSeeder extends Seeder
 {
     /**
-     * User permissions
+     * Permissions
      *
      * @var array
      */
     protected array $permissions = [
-        'users.create',
-        'users.read',
-        'users.update',
-        'users.delete',
+        'permissions.read',
+        'roles.create',
+        'roles.read',
+        'roles.update',
+        'roles.delete',
     ];
 
     /**

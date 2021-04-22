@@ -27,8 +27,10 @@ class RoleController extends Controller
      */
     public function index(Request $request, PaginateRole $action): JsonResponse
     {
-        $roles = $action->execute(50, $request->query());
-
+        $roles = $action->execute(
+            $request->get('per_page') ?? 50,
+            $request->query()
+        );
         return fractal(
                 $roles,
                 new RoleTransformer()
