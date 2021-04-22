@@ -6,6 +6,7 @@
 .env
 .env.backup
 .php_cs.cache
+.phpstorm.meta.php
 .phpunit.result.cache
 _ide_helper.php
 composer.lock
@@ -13,5 +14,4 @@ docker-compose.override.yml
 Homestead.json
 Homestead.yaml
 npm-debug.log
-.phpstorm.meta.php
 yarn-error.log
