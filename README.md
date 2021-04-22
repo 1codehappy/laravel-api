@@ -1,4 +1,4 @@
-## Laravel DDD Api
+## Laravel Api
 
 **UNDER CONSTRUCTION**
 
