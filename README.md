@@ -1,6 +1,6 @@
 ## Laravel Api
 
-**UNDER CONSTRUCTION**
+**Experimental**
 
 A Laravel's boilerpate for your api's project, using Domain Driven Design based on [Laravel Beyond Crud](https://laravel-beyond-crud.com/).
 
@@ -9,7 +9,7 @@ A Laravel's boilerpate for your api's project, using Domain Driven Design based 
 Create your project using composer.
 
 ```bash
-composer create-project 1codehappy/laravel-ddd-api api
+composer create-project 1codehappy/laravel-api api
 ```
 
 ---
