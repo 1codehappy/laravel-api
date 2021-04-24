@@ -1,25 +1,21 @@
-# PHP CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-php/ for more details
-#
 version: 2.1
 
 workflows:
   workflow:
     jobs:
       - test-with-preinstalled-php:
-        name: PHP 7.4
-        docker-image: circleci/php:7.4-node-browsers
+          name: PHP 7.4
+          docker-image: circleci/php:7.4
       - test-with-preinstalled-php:
-        name: PHP 8.0
-        docker-image: circleci/php:8.0-node-browsers
+          name: PHP 8.0
+          docker-image: circleci/php:8.0
 
 jobs:
-  build:
-    test-with-preinstalled-php:
-      parameters:
-        docker-image:
-          type: string
+  test-with-preinstalled-php:
+    parameters:
+      docker-image:
+        type: string
+
     docker:
       # Specify the version you desire here
       - image: <<parameters.docker-image>>
