@@ -11,7 +11,7 @@ class PaginatePermission
     /**
      * List permissions
      *
-     * @param integer $perPage
+     * @param int $perPage
      * @param array $query
      * @return LengthAwarePaginator
      */

@@ -11,7 +11,7 @@ class PaginateRole
     /**
      * List Roles
      *
-     * @param integer $perPage
+     * @param int $perPage
      * @param array $query
      * @return LengthAwarePaginator
      */

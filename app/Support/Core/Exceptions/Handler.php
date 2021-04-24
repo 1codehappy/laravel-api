@@ -71,7 +71,7 @@ class Handler extends ExceptionHandler
      * Throws api exception
      *
      * @param Throwable $exception
-     * @param integer $statusCode
+     * @param int $statusCode
      * @return JsonResponse
      */
     protected function throws(
@@ -87,6 +87,7 @@ class Handler extends ExceptionHandler
         if (Config::get('app.debug') === true) {
             $data['trace'] = explode("\n", $exception->getTraceAsString());
         }
+
         return response()->json($data, $statusCode);
     }
 

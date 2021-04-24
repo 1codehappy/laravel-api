@@ -24,6 +24,7 @@ class EditRole
         if ($dto->hasPermissions()) {
             $role->givePermissionTo($dto->permissions);
         }
+
         return $role;
     }
 }

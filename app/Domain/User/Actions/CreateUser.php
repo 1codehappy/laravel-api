@@ -22,6 +22,7 @@ class CreateUser
         if (count($dto->permissions ?? []) > 0) {
             $user->syncPermissions($dto->permissions);
         }
+
         return $user->fresh();
     }
 }
