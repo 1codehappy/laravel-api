@@ -1,6 +1,6 @@
 ## Laravel Api
 
-[![CircleCI](https://circleci.com/gh/1codehappy/laravel-api.svg?style=svg)](https://circleci.com/gh/1codehappy/laravel-api)
+[![CircleCI](https://circleci.com/gh/1codehappy/laravel-api.svg?style=shield)](https://circleci.com/gh/1codehappy/laravel-api)
 
 
 **Experimental**
