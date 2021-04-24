@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('array_rm_null_values')) {
+if (! function_exists('array_rm_null_values')) {
     /**
      * Remove null values from array
      *
@@ -13,6 +13,7 @@ if (!function_exists('array_rm_null_values')) {
             if (is_array($value)) {
                 return count($value);
             }
+
             return strlen($value);
         });
     }

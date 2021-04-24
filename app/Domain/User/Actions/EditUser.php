@@ -19,13 +19,15 @@ class EditUser
     {
         $user
             ->fill(Arr::except(array_rm_null_values($dto->toArray()), 'password'))
-            ->save();
+            ->save()
+        ;
         if (count($dto->roles ?? []) > 0) {
             $user->syncRoles($dto->roles);
         }
         if (count($dto->permissions ?? []) > 0) {
             $user->syncPermissions($dto->permissions);
         }
+
         return $user->fresh();
     }
 }

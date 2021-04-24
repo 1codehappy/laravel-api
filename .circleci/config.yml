@@ -1,0 +1,75 @@
+version: 2.1
+
+workflows:
+  workflow:
+    jobs:
+      - test-with-preinstalled-php:
+          name: PHP 7.4
+          docker-image: circleci/php:7.4-node-browsers
+      - test-with-preinstalled-php:
+          name: PHP 8.0
+          docker-image: circleci/php:8.0-node-browsers
+
+jobs:
+  test-with-preinstalled-php:
+    parameters:
+      docker-image:
+        type: string
+
+    docker:
+      # Specify the version you desire here
+      - image: <<parameters.docker-image>>
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # Using the RAM variation mitigates I/O contention
+      # for database intensive operations.
+      # - image: circleci/mysql:5.7-ram
+      #
+      # - image: redis:2.8.19
+
+    steps:
+      - checkout
+
+      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo docker-php-ext-install zip
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: php -d memory_limit=-1 /usr/local/bin/composer install -n --prefer-dist
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+      - restore_cache:
+          keys:
+            - node-v1-{{ checksum "package.json" }}
+            - node-v1-
+      - run: yarn install
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+      # prepare the database
+      - run: touch storage/testing.sqlite
+      - run: cp .env.example .env
+      - run: php artisan migrate --env=testing --database=sqlite --force
+      - run: php artisan key:generate
+      - run: php artisan jwt:secret
+
+      # run tests with phpunit or codecept
+      #- run: ./vendor/bin/phpunit
+      - run: php artisan test
+      - store_test_results:
+          path: tests/_output
+      - store_artifacts:
+          path: tests/_output

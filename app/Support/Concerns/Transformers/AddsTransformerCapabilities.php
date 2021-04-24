@@ -20,6 +20,7 @@ trait AddsTransformerCapabilities
     public function transformed(array $data): array
     {
         Arr::forget($data, $this->fields);
+
         return $data;
     }
 
@@ -32,6 +33,7 @@ trait AddsTransformerCapabilities
     public function withoutFields(array $fields): self
     {
         $this->fields = $fields;
+
         return $this;
     }
 
@@ -42,8 +44,8 @@ trait AddsTransformerCapabilities
      */
     public function withoutTimestamps(): self
     {
-        $this->fields[] = 'created_at';
-        $this->fields[] = 'updated_at';
+        $this->fields = ['created_at', 'updated_at'];
+
         return $this;
     }
 
@@ -55,6 +57,7 @@ trait AddsTransformerCapabilities
     public function withoutIncludes(): self
     {
         $this->setDefaultIncludes([]);
+
         return $this;
     }
 
@@ -72,6 +75,7 @@ trait AddsTransformerCapabilities
         foreach ($resources as $resource) {
             $this->defaultIncludes[] = $resource;
         }
+
         return $this;
     }
 }

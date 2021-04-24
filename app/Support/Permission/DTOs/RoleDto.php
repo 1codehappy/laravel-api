@@ -31,7 +31,7 @@ class RoleDto extends Item
     /**
      * Check this role has permissions
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPermissions(): bool
     {

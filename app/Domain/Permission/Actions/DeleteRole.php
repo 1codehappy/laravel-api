@@ -10,7 +10,7 @@ class DeleteRole
      * Delete role
      *
      * @param Role $role
-     * @return boolean
+     * @return bool
      */
     public function execute(Role $role): bool
     {
