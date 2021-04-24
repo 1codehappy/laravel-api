@@ -40,7 +40,7 @@ class AuthEndpointsTest extends TestCase
     public function it_gets_invalid_credentials(): void
     {
         $response = $this->json('POST', '/auth/login', [
-            'email' => $this->faker()->email,
+            'email' => 'john.doe@example.com',
             'password' => $this->faker()->password,
         ]);
         $response
