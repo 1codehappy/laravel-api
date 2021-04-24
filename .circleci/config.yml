@@ -5,10 +5,10 @@ workflows:
     jobs:
       - test-with-preinstalled-php:
           name: PHP 7.4
-          docker-image: circleci/php:7.4
+          docker-image: circleci/php:7.4-node-browsers
       - test-with-preinstalled-php:
           name: PHP 8.0
-          docker-image: circleci/php:8.0
+          docker-image: circleci/php:8.0-node-browsers
 
 jobs:
   test-with-preinstalled-php:
