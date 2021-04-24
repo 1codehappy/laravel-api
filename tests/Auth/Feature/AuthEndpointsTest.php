@@ -121,7 +121,6 @@ class AuthEndpointsTest extends TestCase
             ])
             ->json('POST', '/auth/logout')
         ;
-        file_put_contents(base_path('logoff.log'), print_r($response->getContent(), 1));
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -155,7 +154,6 @@ class AuthEndpointsTest extends TestCase
             ])
             ->json('POST', '/auth/refresh')
         ;
-        file_put_contents(base_path('refreshtoken.log'), print_r($response->getContent(), 1));
         $response
             ->assertStatus(201)
             ->assertJson([
