@@ -1,6 +1,7 @@
 ## Laravel Api
 
 [![CircleCI](https://circleci.com/gh/1codehappy/laravel-api.svg?style=shield)](https://circleci.com/gh/1codehappy/laravel-api)
+[![Github All Releases](https://img.shields.io/github/downloads/1codehappy/laravel-api/total.svg)]()
 
 
 **Experimental**
