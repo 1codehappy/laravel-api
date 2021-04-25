@@ -58,9 +58,9 @@ class UserController extends Controller
      */
     public function store(UserStore $request, CreateUser $action): JsonResponse
     {
-        $data = UserDto::fromRequest($request);
-        $user = DB::transaction(function () use ($action, $data) {
-            return $action->execute($data);
+        $dto = UserDto::fromRequest($request);
+        $user = DB::transaction(function () use ($action, $dto) {
+            return $action->execute($dto);
         });
 
         return fractal($user, new UserTransformer())
@@ -81,9 +81,9 @@ class UserController extends Controller
         User $user,
         EditUser $action
     ): JsonResponse {
-        $data = UserDto::fromRequest($request);
-        $user = DB::transaction(function () use ($action, $data, $user) {
-            return $action->execute($data, $user);
+        $dto = UserDto::fromRequest($request);
+        $user = DB::transaction(function () use ($action, $dto, $user) {
+            return $action->execute($dto, $user);
         });
 
         return fractal($user, new UserTransformer())

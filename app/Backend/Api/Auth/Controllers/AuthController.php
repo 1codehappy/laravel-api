@@ -3,7 +3,6 @@
 namespace App\Backend\Api\Auth\Controllers;
 
 use App\Backend\Api\Auth\Requests\UserLogin;
-use App\Backend\Api\User\Transformers\UserTransformer;
 use App\Support\Core\Api\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -28,21 +27,6 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
-    }
-
-    /**
-     * Get the authenticated User.
-     *
-     * @return JsonResponse
-     */
-    public function me(): JsonResponse
-    {
-        return fractal(
-                Auth::user(),
-                new UserTransformer()
-            )
-            ->respond()
-        ;
     }
 
     /**

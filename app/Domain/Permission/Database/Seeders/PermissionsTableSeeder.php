@@ -4,22 +4,10 @@ namespace App\Domain\Permission\Database\Seeders;
 
 use App\Domain\Permission\Models\Permission;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Config;
 
 class PermissionsTableSeeder extends Seeder
 {
-    /**
-     * Permissions
-     *
-     * @var array
-     */
-    protected array $permissions = [
-        'permissions.read',
-        'roles.create',
-        'roles.read',
-        'roles.update',
-        'roles.delete',
-    ];
-
     /**
      * Seed the application's database.
      *
@@ -27,7 +15,8 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach ($this->permissions as $permission) {
+        $permissions = Config::get('permission.permission');
+        foreach ($permissions as $permission) {
             if (Permission::where('name', $permission)->first()) {
                 continue;
             }

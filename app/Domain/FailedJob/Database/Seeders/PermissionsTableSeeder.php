@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\User\Database\Seeders;
+namespace App\Domain\Permission\Database\Seeders;
 
 use App\Domain\Permission\Models\Permission;
 use Illuminate\Database\Seeder;
@@ -15,7 +15,7 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        $permissions = Config::get('user.permission');
+        $permissions = Config::get('failed_job.permission');
         foreach ($permissions as $permission) {
             if (Permission::where('name', $permission)->first()) {
                 continue;
