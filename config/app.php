@@ -163,7 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
+         * Domain Service Providers...
          */
         App\Domain\FailedJob\Providers\ServiceProvider::class,
         App\Domain\Permission\Providers\ServiceProvider::class,

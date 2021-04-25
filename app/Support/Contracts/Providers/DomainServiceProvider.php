@@ -50,7 +50,7 @@ abstract class DomainServiceProvider extends ServiceProvider
         foreach (glob("$configDir/*.php") as $filename) {
             $this->mergeConfigFrom(
                 $filename,
-                $domainName
+                $domainName . '.' . pathinfo($filename, PATHINFO_FILENAME)
             );
         }
     }

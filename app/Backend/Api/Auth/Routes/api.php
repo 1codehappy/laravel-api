@@ -1,6 +1,7 @@
 <?php
 
 use App\Backend\Api\Auth\Controllers\AuthController;
+use App\Backend\Api\Auth\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('api')
@@ -11,8 +12,14 @@ Route::middleware('api')
         ;
         Route::middleware('auth:api')
             ->group(function () {
-                Route::get('me', [AuthController::class, 'me'])
+                Route::get('me', [ProfileController::class, 'me'])
                     ->name('auth.me')
+                ;
+                Route::put('me', [ProfileController::class, 'updateProfile'])
+                    ->name('auth.me')
+                ;
+                Route::put('me/password', [ProfileController::class, 'changePassword'])
+                    ->name('auth.password')
                 ;
                 Route::post('logout', [AuthController::class, 'logout'])
                     ->name('auth.logout')
