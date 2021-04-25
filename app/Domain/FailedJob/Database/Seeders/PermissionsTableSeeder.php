@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Permission\Database\Seeders;
+namespace App\Domain\FailedJob\Database\Seeders;
 
 use App\Domain\Permission\Models\Permission;
 use Illuminate\Database\Seeder;
