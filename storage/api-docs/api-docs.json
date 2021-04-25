@@ -1,0 +1,611 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel Apis",
+        "description": "A boilerplate for Laravel Apis",
+        "contact": {
+            "email": "contact@codehappy.com"
+        },
+        "license": {
+            "name": "MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Sign in",
+                "description": "Get a JWT via given credentials",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Token"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "Invalid credentials."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "status_code": 422,
+                                        "field_name": [
+                                            "Error description 1",
+                                            "Error description 2",
+                                            "..."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log out",
+                "description": "Invalidate the token",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "Successfully logged out."
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "Authentication failure."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Access denied",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "User does not have the right permissions."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh token",
+                "description": "Generate a new valid token",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Token"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "Authentication failure."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Access denied",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "User does not have the right permissions."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/me": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get user's profile information",
+                "description": "Returns user's profile data",
+                "operationId": "getUserProfile",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "Authentication failure."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update my profile",
+                "description": "Change my profile's data",
+                "operationId": "updateMyProfile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProfileUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "Authentication failure."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "status_code": 422,
+                                        "field_name": [
+                                            "Error description 1",
+                                            "Error description 2",
+                                            "..."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/me/password": {
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update user's password",
+                "description": "Change user's password",
+                "operationId": "updateUserPassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProfileUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "Password successfully changed."
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "Authentication failure."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "status_code": 422,
+                                        "field_name": [
+                                            "Error description 1",
+                                            "Error description 2",
+                                            "..."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "PasswordUpdate": {
+                "description": "Request data for changing password",
+                "required": [
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "password": {
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "password": "abc9876543",
+                    "password_confirmation": "abc9876543"
+                }
+            },
+            "ProfileUpdate": {
+                "description": "Request data for update user's profile",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "name": "John Doe",
+                    "email": "admin@example.com"
+                }
+            },
+            "Token": {
+                "description": "The response when the token was generated.",
+                "properties": {
+                    "message": {
+                        "description": "The message from response.",
+                        "type": "string"
+                    },
+                    "data": {
+                        "properties": {
+                            "access_token": {
+                                "description": "The JWT token to authorization.",
+                                "type": "string"
+                            },
+                            "bearer_type": {
+                                "description": "The type of header authorization.",
+                                "type": "string"
+                            },
+                            "expires_in": {
+                                "description": "The time of token expiration in seconds.",
+                                "type": "integer",
+                                "format": "int32"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "message": "Token generated.",
+                    "data": {
+                        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkudGVuYW50MS5oaXJlZDM2NS5kb2NrZXIuaW50ZXJuYWxcL2xvZ2luIiwiaWF0IjoxNjAzNDc2NTE5LCJleHAiOjE2MDM0ODAxMTksIm5iZiI6MTYwMzQ3NjUxOSwianRpIjoiTlNkUXI0M2gzQTFLMWJRSiIsInN1YiI6MSwicHJ2IjoiMWM5OGY5ZmNlMjZkM2JhNDg0NGNkYmQ5M2MzNjcwZTViNGJkYzlmOSJ9.fPbaYuFhOMdrJdMGyGO01_02BzeAUXMO0gHFyDqPcY4",
+                        "token_type": "Bearer",
+                        "expires_in": 3600
+                    }
+                }
+            },
+            "User": {
+                "description": "User's data",
+                "properties": {
+                    "id": {
+                        "description": "The ID of user",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The name of user",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The email of user",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "roles": {
+                        "description": "The roles of user",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "permissions": {
+                        "description": "The permissions of user",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "created_at": {
+                        "description": "The date of creation",
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "updated_at": {
+                        "description": "The date of modification",
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "id": "d3ba0542-73b2-4b19-be42-e5fa528d1a94",
+                    "name": "John Doe",
+                    "email": "john.doe@example.com",
+                    "roles": [
+                        "bb69f847-0166-4a84-8691-cba9a31e367c",
+                        "aa36460d-5de4-4553-a107-f7c90c4792cd"
+                    ],
+                    "permissions": [
+                        "60bcd6e9-8ced-4526-aff8-e31bd4b430f3",
+                        "f9d318e0-5c60-4364-9977-d4539936ce80"
+                    ],
+                    "created_at": "2020-10-22 16:31:03",
+                    "updated_at": "2020-10-22 16:31:03"
+                }
+            },
+            "UserLogin": {
+                "description": "Request data for login",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "email": "john.doe@example.com",
+                    "password": "secret1234"
+                }
+            },
+            "Pagination": {
+                "description": "The metadata response of pagination.",
+                "properties": {
+                    "total": {
+                        "description": "The number of rows",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "count": {
+                        "description": "The number of rows on the current page",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "per_page": {
+                        "description": "The quantity of rows per page",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "current_page": {
+                        "description": "The current page",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "total_pages": {
+                        "description": "The number of pages",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "links": {
+                        "description": "Links to paginate",
+                        "type": "array",
+                        "items": {}
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "total": 1,
+                    "count": 1,
+                    "per_page": 50,
+                    "current_page": 1,
+                    "total_pages": 1,
+                    "links": []
+                }
+            },
+            "Response": {
+                "description": "Api response",
+                "properties": {
+                    "message": {
+                        "description": "The structure of api response",
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "message": "Any message",
+                    "errors": [],
+                    "data": [],
+                    "meta": []
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ]
+}
