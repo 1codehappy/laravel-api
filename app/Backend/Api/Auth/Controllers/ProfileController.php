@@ -2,10 +2,10 @@
 
 namespace App\Backend\Api\Auth\Controllers;
 
-use App\Backend\Api\Auth\Requests\PasswordUpdate;
 use App\Backend\Api\Auth\Requests\ProfileUpdate;
 use App\Backend\Api\User\Transformers\UserTransformer;
-use App\Domain\User\Actions\ChangePassword;
+use App\Domain\Permission\Actions\ReadCachedPermission;
+use App\Domain\Permission\Actions\ReadCachedRole;
 use App\Domain\User\Actions\EditUser;
 use App\Support\Core\Api\Controllers\Controller;
 use App\Support\User\DTOs\UserDto;
@@ -18,14 +18,20 @@ class ProfileController extends Controller
     /**
      * Get the authenticated User.
      *
+     * @param ReadCachedRole $metaRole
+     * @param ReadCachedPermission $metaPermission
      * @return JsonResponse
      */
-    public function me(): JsonResponse
-    {
+    public function index(
+        ReadCachedRole $metaRole,
+        ReadCachedPermission $metaPermission
+    ): JsonResponse {
         return fractal(
                 Auth::user(),
                 new UserTransformer()
             )
+            ->addMeta('roles', $metaRole->execute())
+            ->addMeta('permissions', $metaPermission->execute())
             ->respond()
         ;
     }
@@ -36,7 +42,7 @@ class ProfileController extends Controller
      * @param ProfileUpdate $request
      * @return JsonResponse
      */
-    public function updateProfile(
+    public function update(
         ProfileUpdate $request,
         EditUser $action
     ): JsonResponse {
@@ -49,27 +55,5 @@ class ProfileController extends Controller
         return fractal($user, new UserTransformer())
             ->respond()
         ;
-    }
-
-    /**
-     * Change password
-     *
-     * @return JsonResponse
-     */
-    public function changePassword(
-        PasswordUpdate $request,
-        ChangePassword $action
-    ): JsonResponse {
-        $user = Auth::user();
-        $dto = UserDto::fromRequest($request);
-        $user = DB::transaction(function () use ($action, $dto, $user) {
-            return $action->execute($dto, $user);
-        });
-
-        return response()->json([
-                'message' => 'Password updated.',
-            ])
-        ;
-
     }
 }
