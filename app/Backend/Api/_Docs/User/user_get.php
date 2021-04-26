@@ -4,17 +4,9 @@
  * @OA\Get(
  *     path="/users/{id}",
  *     operationId="getUserById",
- *     tags={"User Accounts"},
+ *     tags={"Users"},
  *     summary="Get user information",
  *     description="Returns user data",
- *     @OA\Parameter(
- *         name="X-Tenant",
- *         required=true,
- *         in="header",
- *         @OA\Schema(
- *             type="string"
- *         )
- *     ),
  *     @OA\Parameter(
  *         name="id",
  *         description="The ID of user",

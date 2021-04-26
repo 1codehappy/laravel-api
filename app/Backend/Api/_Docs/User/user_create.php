@@ -1,33 +1,38 @@
 <?php
 
 /**
- * @OA\Put(
- *     path="/auth/me/password",
- *     operationId="updateUserPassword",
- *     tags={"Profile"},
- *     summary="Update user's password",
- *     description="Change user's password",
+ * @OA\Post(
+ *     path="/users",
+ *     operationId="createUser",
+ *     tags={"Users"},
+ *     summary="Create a new user",
+ *     description="Returns user data",
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\MediaType(
  *             mediaType="application/json",
- *             @OA\Schema(ref="#/components/schemas/PasswordUpdate")
+ *             @OA\Schema(ref="#/components/schemas/UserStore")
  *         )
  *     ),
  *     @OA\Response(
- *         response=200,
- *         description="Ok",
- *         @OA\JsonContent(
- *             ref="#/components/schemas/Response",
- *             example={"message"="Password successfully changed."}
- *         )
+ *         response=201,
+ *         description="Created",
+ *         @OA\JsonContent(ref="#/components/schemas/User")
  *     ),
  *     @OA\Response(
  *         response=401,
  *         description="Unauthorized",
  *         @OA\JsonContent(
  *             ref="#/components/schemas/Response",
- *             example={"message"="Authentication failure."}
+ *             example={"status_code"=401, "message"="Authentication failure."}
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=403,
+ *         description="Access denied",
+ *         @OA\JsonContent(
+ *             ref="#/components/schemas/Response",
+ *             example={"status_code"=403, "message"="User does not have the right permissions."}
  *         )
  *     ),
  *     @OA\Response(
@@ -38,13 +43,12 @@
  *             example={
  *                 "message"="The given data was invalid.",
  *                 "errors"={
- *                 "status_code"=422,
  *                     "field_name"={
  *                         "Error description 1",
  *                         "Error description 2",
  *                         "...",
  *                     }
- *                 },
+ *                 }
  *             }
  *         )
  *     ),

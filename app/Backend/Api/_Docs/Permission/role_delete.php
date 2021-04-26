@@ -8,14 +8,6 @@
  *     summary="Delete role",
  *     description="Remove role from database",
  *     @OA\Parameter(
- *         name="X-Tenant",
- *         required=true,
- *         in="header",
- *         @OA\Schema(
- *             type="string"
- *         )
- *     ),
- *     @OA\Parameter(
  *         name="id",
  *         description="The ID of role",
  *         required=true,

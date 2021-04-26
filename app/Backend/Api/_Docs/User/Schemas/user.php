@@ -4,6 +4,7 @@
  * @OA\Schema(
  *     schema="User",
  *     type="object",
+ *     description="User's data",
  *     @OA\Property(
  *         type="string",
  *         property="id",
@@ -49,13 +50,16 @@
  *         format="datetime"
  *     ),
  *     example={
- *         "id": "17516740",
- *         "name": "Av Joao Procopio da Silva, 211",
- *         "email": "Casa 62, Jd. Esmeralda",
- *         "roles": "Marilia",
- *         "permissions": "SP",
- *         "created_at": "BR",
- *         "updated_at": "BR"
+ *         "id": "d3ba0542-73b2-4b19-be42-e5fa528d1a94",
+ *         "name": "John Doe",
+ *         "email": "john.doe@example.com",
+ *         "roles": {
+ *             "4bc42490-311f-4945-8896-3341f2ecc31c",
+ *             "805d864f-4233-429b-af61-eb3373ac27b6"
+ *         },
+ *         "permissions": {"d93d699c-9791-4383-92e8-01e6dd8051fd"},
+ *         "created_at": "2020-10-22 16:31:03",
+ *         "updated_at": "2020-10-22 16:31:03"
  *     }
  * )
  */

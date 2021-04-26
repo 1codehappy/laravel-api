@@ -7,8 +7,8 @@
  *     description="Generate a new valid token",
  *     tags={"Authentication"},
  *     @OA\Response(
- *         response=200,
- *         description="Ok",
+ *         response=201,
+ *         description="Created",
  *         @OA\JsonContent(
  *             ref="#/components/schemas/Token"
  *         )

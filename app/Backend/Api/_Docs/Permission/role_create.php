@@ -41,7 +41,7 @@
  *         @OA\JsonContent(
  *             ref="#/components/schemas/Response",
  *             example={
- *                 "message"="The given data was invalid."
+ *                 "message"="The given data was invalid.",
  *                 "errors"={
  *                     "field_name"={
  *                         "Error description 1",

@@ -4,17 +4,9 @@
  * @OA\Delete(
  *     path="/users/{id}",
  *     operationId="deleteUser",
- *     tags={"User Accounts"},
+ *     tags={"Users"},
  *     summary="Delete user",
  *     description="Remove user from database",
- *     @OA\Parameter(
- *         name="X-Tenant",
- *         required=true,
- *         in="header",
- *         @OA\Schema(
- *             type="string"
- *         )
- *     ),
  *     @OA\Parameter(
  *         name="id",
  *         description="The ID of user",

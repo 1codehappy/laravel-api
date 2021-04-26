@@ -13,19 +13,19 @@
  *     @OA\Property(
  *         property="errors",
  *         description="The structure of api response",
- *         type="array"
+ *         type="array",
  *         @OA\Items(type="string")
  *     ),
  *     @OA\Property(
  *         property="data",
  *         description="The data of api response",
- *         type="array"
+ *         type="array",
  *         @OA\Items(type="object")
  *     ),
  *     @OA\Property(
  *         property="meta",
  *         description="The data of api response",
- *         type="array"
+ *         type="array",
  *         @OA\Items(type="object")
  *     ),
  *     example={

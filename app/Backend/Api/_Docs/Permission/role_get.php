@@ -8,14 +8,6 @@
  *     summary="Get role information",
  *     description="Returns role data",
  *     @OA\Parameter(
- *         name="X-Tenant",
- *         required=true,
- *         in="header",
- *         @OA\Schema(
- *             type="string"
- *         )
- *     ),
- *     @OA\Parameter(
  *         name="id",
  *         description="The ID of role",
  *         required=true,

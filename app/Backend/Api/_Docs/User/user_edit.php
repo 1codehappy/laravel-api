@@ -4,17 +4,9 @@
  * @OA\Put(
  *     path="/users/{id}",
  *     operationId="updateUser",
- *     tags={"User Accounts"},
+ *     tags={"Users"},
  *     summary="Update user's data",
  *     description="Returns user data",
- *     @OA\Parameter(
- *         name="X-Tenant",
- *         required=true,
- *         in="header",
- *         @OA\Schema(
- *             type="string"
- *         )
- *     ),
  *     @OA\Parameter(
  *         name="id",
  *         description="The ID of user",
@@ -26,39 +18,10 @@
  *         )
  *     ),
  *     @OA\RequestBody(
+ *         required=true,
  *         @OA\MediaType(
  *             mediaType="application/json",
- *             @OA\Schema(
- *                 @OA\Property(
- *                     property="name",
- *                     type="string"
- *                 ),
- *                 @OA\Property(
- *                     property="email",
- *                     type="string",
- *                     format="email"
- *                 ),
- *                 @OA\Property(
- *                     property="roles",
- *                     type="array",
- *                     @OA\Items(
- *                         type="string"
- *                     )
- *                 ),
- *                 @OA\Property(
- *                     property="permissions",
- *                     type="array",
- *                     @OA\Items(
- *                         type="string"
- *                     )
- *                 ),
- *                 example={
- *                     "name": "John Doe",
- *                     "email": "john.doe@gmail.com",
- *                     "roles": {"HR Analyst"},
- *                     "permissions": {"Edit candidate"}
- *                 }
- *             )
+ *             @OA\Schema(ref="#/components/schemas/UserUpdate")
  *         )
  *     ),
  *     @OA\Response(
@@ -97,7 +60,16 @@
  *         description="Unprocessable Entity",
  *         @OA\JsonContent(
  *             ref="#/components/schemas/Response",
- *             example={"status_code"=422, "message"="The given data was invalid."}
+ *             example={
+ *                 "message"="The given data was invalid.",
+ *                 "errors"={
+ *                     "field_name"={
+ *                         "Error description 1",
+ *                         "Error description 2",
+ *                         "...",
+ *                     }
+ *                 }
+ *             }
  *         )
  *     ),
  *     security={
