@@ -19,7 +19,7 @@
  *         description="Unauthorized",
  *         @OA\JsonContent(
  *             ref="#/components/schemas/Response",
- *             example={"message"="Authentication failure."}
+ *             example={"message"="Unauthenticated."}
  *         )
  *     ),
  *     @OA\Response(

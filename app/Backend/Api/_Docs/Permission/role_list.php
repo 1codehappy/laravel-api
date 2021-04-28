@@ -8,7 +8,7 @@
  *     summary="Get list of roles",
  *     description="Returns list of roles",
  *     @OA\Parameter(
- *         name="name",
+ *         name="filter[name]",
  *         description="The name of role",
  *         required=false,
  *         in="query",
@@ -18,11 +18,12 @@
  *     ),
  *     @OA\Parameter(
  *         name="sort",
- *         description="Sort by name, created_at",
+ *         description="Sort by name or created_at",
  *         required=false,
  *         in="query",
  *         @OA\Schema(
- *             type="string"
+ *             type="string",
+ *             enum={"name", "-name", "created_at", "-created_at"}
  *         )
  *     ),
  *     @OA\Parameter(
@@ -74,7 +75,7 @@
  *         description="Unauthorized",
  *         @OA\JsonContent(
  *             ref="#/components/schemas/Response",
- *             example={"message"="Authentication failure."}
+ *             example={"message"="Unauthenticated."}
  *         )
  *     ),
  *     @OA\Response(

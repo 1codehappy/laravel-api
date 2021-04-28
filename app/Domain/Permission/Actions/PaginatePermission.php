@@ -24,6 +24,7 @@ class PaginatePermission
             ->defaultSort('name')
             ->allowedSorts([
                 'name',
+                'created_at',
             ])
             ->paginate($perPage)
             ->appends($query)
