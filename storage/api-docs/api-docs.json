@@ -107,7 +107,7 @@
                                     "$ref": "#/components/schemas/Response"
                                 },
                                 "example": {
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -159,7 +159,7 @@
                                     "$ref": "#/components/schemas/Response"
                                 },
                                 "example": {
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -306,7 +306,7 @@
                                     "$ref": "#/components/schemas/Response"
                                 },
                                 "example": {
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -359,7 +359,7 @@
                                     "$ref": "#/components/schemas/Response"
                                 },
                                 "example": {
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -433,7 +433,7 @@
                                     "$ref": "#/components/schemas/Response"
                                 },
                                 "example": {
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -477,7 +477,7 @@
                 "operationId": "getPermissionsList",
                 "parameters": [
                     {
-                        "name": "name",
+                        "name": "filter[name]",
                         "in": "query",
                         "description": "The name of permission",
                         "required": false,
@@ -488,10 +488,16 @@
                     {
                         "name": "sort",
                         "in": "query",
-                        "description": "Sort by id, name, created_at",
+                        "description": "Sort by name or created_at",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "enum": [
+                                "name",
+                                "-name",
+                                "created_at",
+                                "-created_at"
+                            ]
                         }
                     },
                     {
@@ -553,7 +559,7 @@
                                     "$ref": "#/components/schemas/Response"
                                 },
                                 "example": {
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -589,7 +595,7 @@
                 "operationId": "getRolesList",
                 "parameters": [
                     {
-                        "name": "name",
+                        "name": "filter[name]",
                         "in": "query",
                         "description": "The name of role",
                         "required": false,
@@ -600,10 +606,16 @@
                     {
                         "name": "sort",
                         "in": "query",
-                        "description": "Sort by name, created_at",
+                        "description": "Sort by name or created_at",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "enum": [
+                                "name",
+                                "-name",
+                                "created_at",
+                                "-created_at"
+                            ]
                         }
                     },
                     {
@@ -665,7 +677,7 @@
                                     "$ref": "#/components/schemas/Response"
                                 },
                                 "example": {
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -726,7 +738,7 @@
                                     "$ref": "#/components/schemas/Response"
                                 },
                                 "example": {
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -817,7 +829,7 @@
                                 },
                                 "example": {
                                     "status_code": 401,
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -910,7 +922,7 @@
                                     "$ref": "#/components/schemas/Response"
                                 },
                                 "example": {
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -1000,7 +1012,7 @@
                                 },
                                 "example": {
                                     "status_code": 401,
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -1051,16 +1063,7 @@
                 "operationId": "getUsersList",
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "query",
-                        "description": "The ID of user",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "name",
+                        "name": "filter[name]",
                         "in": "query",
                         "description": "Name",
                         "required": false,
@@ -1069,7 +1072,7 @@
                         }
                     },
                     {
-                        "name": "name",
+                        "name": "filter[email]",
                         "in": "query",
                         "description": "Email",
                         "required": false,
@@ -1080,10 +1083,16 @@
                     {
                         "name": "sort",
                         "in": "query",
-                        "description": "Sort by id, name, email, created_at",
+                        "description": "Sort by name or created_at",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "enum": [
+                                "name",
+                                "-name",
+                                "created_at",
+                                "-created_at"
+                            ]
                         }
                     },
                     {
@@ -1144,7 +1153,7 @@
                                 },
                                 "example": {
                                     "status_code": 401,
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -1207,7 +1216,7 @@
                                 },
                                 "example": {
                                     "status_code": 401,
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -1299,7 +1308,7 @@
                                 },
                                 "example": {
                                     "status_code": 401,
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -1393,7 +1402,7 @@
                                 },
                                 "example": {
                                     "status_code": 401,
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }
@@ -1485,7 +1494,7 @@
                                 },
                                 "example": {
                                     "status_code": 401,
-                                    "message": "Authentication failure."
+                                    "message": "Unauthenticated."
                                 }
                             }
                         }

@@ -26,7 +26,7 @@
  *         description="Unauthorized",
  *         @OA\JsonContent(
  *             ref="#/components/schemas/Response",
- *             example={"status_code"=401, "message"="Authentication failure."}
+ *             example={"status_code"=401, "message"="Unauthenticated."}
  *         )
  *     ),
  *     @OA\Response(

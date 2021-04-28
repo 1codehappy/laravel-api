@@ -8,16 +8,7 @@
  *     summary="Get list of users",
  *     description="Returns list of users",
  *     @OA\Parameter(
- *         name="id",
- *         description="The ID of user",
- *         required=false,
- *         in="query",
- *         @OA\Schema(
- *              type="string"
- *         )
- *     ),
- *     @OA\Parameter(
- *         name="name",
+ *         name="filter[name]",
  *         description="Name",
  *         required=false,
  *         in="query",
@@ -26,7 +17,7 @@
  *         )
  *     ),
  *     @OA\Parameter(
- *         name="name",
+ *         name="filter[email]",
  *         description="Email",
  *         required=false,
  *         in="query",
@@ -36,11 +27,12 @@
  *     ),
  *     @OA\Parameter(
  *         name="sort",
- *         description="Sort by id, name, email, created_at",
+ *         description="Sort by name or created_at",
  *         required=false,
  *         in="query",
  *         @OA\Schema(
- *             type="string"
+ *             type="string",
+ *             enum={"name", "-name", "created_at", "-created_at"}
  *         )
  *     ),
  *     @OA\Parameter(
@@ -90,7 +82,7 @@
  *         description="Unauthorized",
  *         @OA\JsonContent(
  *             ref="#/components/schemas/Response",
- *             example={"status_code"=401, "message"="Authentication failure."}
+ *             example={"status_code"=401, "message"="Unauthenticated."}
  *         )
  *     ),
  *     @OA\Response(
