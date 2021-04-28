@@ -71,7 +71,7 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
-            "@php artisan kwt:secret --ansi"
+            "@php artisan jwt:secret --ansi"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
