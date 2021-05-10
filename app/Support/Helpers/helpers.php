@@ -14,7 +14,7 @@ if (! function_exists('array_rm_null_values')) {
                 return count($value);
             }
 
-            return strlen($value);
+            return !is_null($value) && strlen($value);
         });
     }
 }
