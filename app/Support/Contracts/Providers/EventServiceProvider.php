@@ -2,7 +2,7 @@
 
 namespace App\Support\Contracts\Providers;
 
-use Illuminate\Events\EventServiceProvider as ServiceProvider;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 abstract class EventServiceProvider extends ServiceProvider
 {
