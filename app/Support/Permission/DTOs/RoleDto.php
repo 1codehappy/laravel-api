@@ -2,10 +2,10 @@
 
 namespace App\Support\Permission\DTOs;
 
-use App\Support\Contracts\DTOs\Item;
 use Illuminate\Foundation\Http\FormRequest;
+use Spatie\DataTransferObject\DataTransferObject;
 
-class RoleDto extends Item
+class RoleDto extends DataTransferObject
 {
     /**
      * The role's name

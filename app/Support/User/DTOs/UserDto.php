@@ -2,10 +2,10 @@
 
 namespace App\Support\User\DTOs;
 
-use App\Support\Contracts\DTOs\Item;
 use Illuminate\Foundation\Http\FormRequest;
+use Spatie\DataTransferObject\DataTransferObject;
 
-class UserDto extends Item
+class UserDto extends DataTransferObject
 {
     /**
      * The user's name

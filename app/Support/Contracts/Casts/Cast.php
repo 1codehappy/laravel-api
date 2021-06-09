@@ -5,8 +5,8 @@ namespace App\Support\Contracts\Casts;
 use App\Support\Exceptions\InvalidDataTransferObject as InvalidDataTransferObjectException;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\DataTransferObject;
-use Spatie\DataTransferObject\DataTransferObjectCollection;
 
 abstract class Cast implements CastsAttributes
 {
@@ -27,8 +27,8 @@ abstract class Cast implements CastsAttributes
 
             return new $dtoClass(json_decode($value, true));
         }
-        if (is_subclass_of($dtoClass, DataTransferObjectCollection::class)) {
-            if (! $value) {
+        if ($dtoClass instanceof Collection) {
+            if ($value->isEmpty()) {
                 $value = '[]';
             }
 
@@ -39,7 +39,7 @@ abstract class Cast implements CastsAttributes
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
@@ -53,7 +53,7 @@ abstract class Cast implements CastsAttributes
         if (! $value instanceof $dtoClass) {
             throw new InvalidDataTransferObjectException($dtoClass);
         }
-        /** @var DataTransferObject|DataTransferObjectCollection $value */
+        /** @var DataTransferObject|Collection $value */
         return json_encode($value->toArray());
     }
 
