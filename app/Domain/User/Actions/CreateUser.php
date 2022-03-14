@@ -8,19 +8,19 @@ use App\Support\User\DTOs\UserDto;
 class CreateUser
 {
     /**
-     * Create new user
+     * Create a new user.
      *
-     * @param UserDto $dto
+     * @param UserDto $data
      * @return User
      */
-    public function execute(UserDto $dto): User
+    public function execute(UserDto $data): User
     {
-        $user = User::create($dto->toArray());
-        if (count($dto->roles ?? []) > 0) {
-            $user->syncRoles($dto->roles);
+        $user = User::create($data->toArray());
+        if (count($data->roles ?? []) > 0) {
+            $user->syncRoles($data->roles);
         }
-        if (count($dto->permissions ?? []) > 0) {
-            $user->syncPermissions($dto->permissions);
+        if (count($data->permissions ?? []) > 0) {
+            $user->syncPermissions($data->permissions);
         }
 
         return $user->fresh();

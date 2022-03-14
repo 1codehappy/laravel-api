@@ -2,8 +2,7 @@
 
 namespace App\Backend\Api\User\Controllers;
 
-use App\Backend\Api\User\Request\UserStore;
-use App\Backend\Api\User\Request\UserUpdate;
+use App\Backend\Api\User\Request\UserRequest;
 use App\Backend\Api\User\Transformers\UserTransformer;
 use App\Domain\User\Actions\CreateUser;
 use App\Domain\User\Actions\DeleteUser;
@@ -19,7 +18,17 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     /**
-     * List users
+     * Apply policies.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class);
+    }
+
+    /**
+     * List the users.
      *
      * @param Request $request
      * @param PaginateUser $action
@@ -31,68 +40,57 @@ class UserController extends Controller
             $request->get('per_page') ?? 50,
             $request->query()
         );
-        return fractal($users, new UserTransformer())
-            ->respond()
-        ;
+
+        return fractal($users, new UserTransformer()) ->respond();
     }
 
     /**
-     * Show user's info
+     * Show user's info.
      *
      * @param User $user
      * @return JsonResponse
      */
     public function show(User $user): JsonResponse
     {
-        return fractal($user, new UserTransformer())
-            ->respond()
-        ;
+        return fractal($user, new UserTransformer()) ->respond();
     }
 
     /**
-     * Create new user
+     * Create a new user.
      *
-     * @param UserStore $request
+     * @param UserRequest $request
      * @param CreateUser $action
      * @return JsonResponse
      */
-    public function store(UserStore $request, CreateUser $action): JsonResponse
+    public function store(UserRequest $request, CreateUser $action): JsonResponse
     {
         $dto = UserDto::fromRequest($request);
-        $user = DB::transaction(function () use ($action, $dto) {
-            return $action->execute($dto);
-        });
+        $user = DB::transaction(fn () => $action->execute($dto));
 
-        return fractal($user, new UserTransformer())
-            ->respond(201)
-        ;
+        return fractal($user, new UserTransformer()) ->respond(201);
     }
 
     /**
-     * Update user's data
+     * Update the user's data.
      *
-     * @param UserUpdate $request
+     * @param UserRequest $request
      * @param User $user
      * @param EditUser $action
      * @return JsonResponse
      */
     public function update(
-        UserUpdate $request,
+        UserRequest $request,
         User $user,
         EditUser $action
     ): JsonResponse {
         $dto = UserDto::fromRequest($request);
-        $user = DB::transaction(function () use ($action, $dto, $user) {
-            return $action->execute($dto, $user);
-        });
+        $user = DB::transaction(fn () => $action->execute($dto, $user));
 
-        return fractal($user, new UserTransformer())
-            ->respond()
-        ;
+        return fractal($user, new UserTransformer()) ->respond();
     }
 
     /**
-     * Delete user
+     * Delete the user.
      *
      * @param User $user
      * @param DeleteUser $action
@@ -100,9 +98,7 @@ class UserController extends Controller
      */
     public function destroy(User $user, DeleteUser $action): JsonResponse
     {
-        DB::transaction(function () use ($action, $user) {
-            return $action->execute($user);
-        });
+        DB::transaction(fn () => $action->execute($user));
 
         return response()->json([], 204);
     }

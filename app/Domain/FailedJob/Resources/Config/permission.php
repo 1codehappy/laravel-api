@@ -5,5 +5,6 @@
  */
 
 return [
-    'failed_jobs.read',
+    'failed_jobs.viewAny',
+    'failed_jobs.view',
 ];

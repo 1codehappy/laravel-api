@@ -12,6 +12,9 @@
  *         name="MIT"
  *     )
  * )
+ */
+
+/**
  * @OA\SecurityScheme(
  *     type="http",
  *     securityScheme="bearerAuth",

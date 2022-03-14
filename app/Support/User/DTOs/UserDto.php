@@ -3,9 +3,9 @@
 namespace App\Support\User\DTOs;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Spatie\DataTransferObject\DataTransferObject;
+use JessArcher\CastableDataTransferObject\CastableDataTransferObject;
 
-class UserDto extends DataTransferObject
+class UserDto extends CastableDataTransferObject
 {
     /**
      * The user's name
@@ -22,35 +22,20 @@ class UserDto extends DataTransferObject
     public ?string $email;
 
     /**
-     * The user's password
+     * The user's password.
      *
      * @var string|null
      */
     public ?string $password;
 
-    /**
-     * The timestamp of email verification
-     *
-     * @var string|null
-     */
-    public ?string $email_verified_at;
-
-    /**
-     * The roles of user
-     *
-     * @var array|null
-     */
+    /** @var string[]|null The roles of the user. */
     public ?array $roles;
 
-    /**
-     * The permissions of user
-     *
-     * @var array|null
-     */
+    /** @var string[]|null The permissions of the user. */
     public ?array $permissions;
 
     /**
-     * Create data from request
+     * Create dto from a request.
      *
      * @param FormRequest $request
      * @return self

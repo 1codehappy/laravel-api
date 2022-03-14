@@ -5,8 +5,9 @@
  */
 
 return [
+    'users.viewAny',
+    'users.view',
     'users.create',
-    'users.read',
     'users.update',
     'users.delete',
 ];

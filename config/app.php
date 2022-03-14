@@ -161,12 +161,16 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        /*
+         * Health Check Service Provider.
+         */
+        App\Backend\Api\HealthCheck\Providers\RouteServiceProvider::class,
 
         /*
          * Domain Service Providers...
          */
+        App\Domain\Acl\Providers\ServiceProvider::class,
         App\Domain\FailedJob\Providers\ServiceProvider::class,
-        App\Domain\Permission\Providers\ServiceProvider::class,
         App\Domain\User\Providers\ServiceProvider::class,
 
     ],
@@ -221,6 +225,34 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        #
+        # For tinker & testing.
+        #
+
+        # Actions - Acl Domain
+        'CreateRole' => App\Domain\Acl\Actions\CreateRole::class,
+        'DeleteRole' => App\Domain\Acl\Actions\DeleteRole::class,
+        'EditRole' => App\Domain\Acl\Actions\EditRole::class,
+
+        # Actions - User Domain
+        'ChangePassword' => App\Domain\User\Actions\ChangePassword::class,
+        'CreateUser' => App\Domain\User\Actions\CreateUser::class,
+        'DeleteUser' => App\Domain\User\Actions\DeleteUser::class,
+        'EditUser' => App\Domain\User\Actions\EditUser::class,
+
+        # Collections
+        'PermissionCollection' => App\Support\Acl\Collections\PermissionCollection::class,
+        'RoleCollection' => App\Support\Acl\Collections\RoleCollection::class,
+
+        # Data Transfer Objects
+        'PermissionDto' => App\Support\Acl\DTOs\PermissionDto::class,
+        'RoleDto' => App\Support\Acl\DTOs\RoleDto::class,
+        'UserDto' => App\Support\User\DTOs\UserDto::class,
+
+        # Models
+        'Permission' => App\Domain\Acl\Models\Permission::class,
+        'Role' => App\Domain\Acl\Models\Role::class,
+        'User' => App\Domain\User\Models\User::class,
     ],
 
 ];
