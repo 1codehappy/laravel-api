@@ -12,34 +12,46 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0",
         "darkaonline/l5-swagger": "^8.0",
-        "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laracasts/presenter": "0.2.*",
-        "laravel/framework": "^8.12",
+        "laracasts/presenter": "dev-chore/laravel-9",
+        "laravel/framework": "^9.0",
         "laravel/tinker": "^2.5",
-        "spatie/data-transfer-object": "^2.8",
-        "spatie/laravel-fractal": "^5.8",
-        "spatie/laravel-permission": "^4.0",
-        "spatie/laravel-query-builder": "^3.3",
-        "tymon/jwt-auth": "^1.0.0"
+        "php-open-source-saver/jwt-auth": "^1.4",
+        "spatie/data-transfer-object": "^3.0",
+        "spatie/laravel-fractal": "^6.0",
+        "spatie/laravel-permission": "^5.0",
+        "spatie/laravel-query-builder": "^5.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/michaeldyrynda/Presenter"
+        }
+    ],
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.9",
         "brianium/paratest": "^6.2",
-        "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "friendsofphp/php-cs-fixer": "^2.18",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.0",
+        "pestphp/pest-plugin-faker": "^1.0",
+        "pestphp/pest-plugin-laravel": "^1.2",
+        "pestphp/pest-plugin-parallel": "^1.0",
+        "phpunit/phpunit": "^9.3.3",
+        "spatie/laravel-ignition": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "extra": {
         "laravel": {
@@ -56,7 +68,7 @@
             "Tests\\": "tests/"
         },
         "files": [
-            "app/Support/Helpers/helpers.php"
+            "app/Support/Core/Helpers/helpers.php"
         ]
     },
     "minimum-stability": "dev",

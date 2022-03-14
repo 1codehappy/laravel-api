@@ -4,7 +4,7 @@ namespace App\Domain\Permission\Models;
 
 use App\Domain\Permission\Database\Factories\RoleFactory;
 use App\Domain\Permission\Presenters\RolePresenter;
-use App\Support\Concerns\Models\HasUuid;
+use App\Support\Core\Concerns\Models\HasUuid;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laracasts\Presenter\PresentableTrait;

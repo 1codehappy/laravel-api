@@ -15,6 +15,7 @@ class LoginController extends Controller
     /**
      * Get a JWT via given credentials.
      *
+     * @param UserLogin $request
      * @return JsonResponse
      */
     public function __invoke(UserLogin $request): JsonResponse
@@ -25,8 +26,7 @@ class LoginController extends Controller
             return response()
                 ->json([
                     'message' => 'Invalid credentials.',
-                ], 401)
-            ;
+                ], 401);
         }
 
         return $this->respondWithToken($token);

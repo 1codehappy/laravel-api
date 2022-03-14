@@ -9,7 +9,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class PaginatePermission
 {
     /**
-     * List permissions
+     * Paginate permissions.
      *
      * @param int $perPage
      * @param array $query
@@ -21,13 +21,13 @@ class PaginatePermission
             ->allowedFilters([
                 'name',
             ])
-            ->defaultSort('name')
+            ->defaultSort('updated_at')
             ->allowedSorts([
                 'name',
                 'created_at',
+                'updated_at',
             ])
             ->paginate($perPage)
-            ->appends($query)
-        ;
+            ->appends($query);
     }
 }

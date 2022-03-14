@@ -8,7 +8,7 @@ use App\Support\Permission\DTOs\RoleDto;
 class CreateRole
 {
     /**
-     * Create new role
+     * Create a new role.
      *
      * @param RoleDto $dto
      * @return Role

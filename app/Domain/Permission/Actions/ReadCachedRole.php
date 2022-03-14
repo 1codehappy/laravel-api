@@ -3,7 +3,7 @@
 namespace App\Domain\Permission\Actions;
 
 use App\Domain\Permission\Models\Role;
-use App\Support\Contracts\Actions\ReadCachedData;
+use App\Support\Core\Contracts\Actions\ReadCachedData;
 
 class ReadCachedRole extends ReadCachedData
 {

@@ -7,7 +7,7 @@ use App\Domain\User\Models\User;
 class DeleteUser
 {
     /**
-     * Delete user
+     * Delete the user.
      *
      * @param User $user
      * @return bool

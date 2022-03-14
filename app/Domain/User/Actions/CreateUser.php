@@ -8,7 +8,7 @@ use App\Support\User\DTOs\UserDto;
 class CreateUser
 {
     /**
-     * Create new user
+     * Create a new user.
      *
      * @param UserDto $dto
      * @return User

@@ -5,9 +5,10 @@
  */
 
 return [
-    'permissions.read',
+    'permissions.viewAny',
+    'roles.viewAny',
+    'roles.view',
     'roles.create',
-    'roles.read',
     'roles.update',
     'roles.delete',
 ];

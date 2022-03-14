@@ -165,6 +165,7 @@ return [
         /*
          * Domain Service Providers...
          */
+        App\Backend\Api\HealthCheck\Providers\RouteServiceProvider::class,
         App\Domain\FailedJob\Providers\ServiceProvider::class,
         App\Domain\Permission\Providers\ServiceProvider::class,
         App\Domain\User\Providers\ServiceProvider::class,

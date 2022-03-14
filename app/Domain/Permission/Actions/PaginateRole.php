@@ -9,7 +9,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class PaginateRole
 {
     /**
-     * List Roles
+     * Paginate roles.
      *
      * @param int $perPage
      * @param array $query
@@ -21,13 +21,13 @@ class PaginateRole
             ->allowedFilters([
                 'name',
             ])
-            ->defaultSort('name')
+            ->defaultSort('-updated_at')
             ->allowedSorts([
                 'name',
                 'created_at',
+                'updated_at',
             ])
             ->paginate($perPage)
-            ->appends($query)
-        ;
+            ->appends($query);
     }
 }

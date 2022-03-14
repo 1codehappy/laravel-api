@@ -2,8 +2,7 @@
 
 namespace App\Backend\Api\Permission\Controllers;
 
-use App\Backend\Api\Permission\Requests\RoleStore;
-use App\Backend\Api\Permission\Requests\RoleUpdate;
+use App\Backend\Api\Permission\Requests\RoleRequest;
 use App\Backend\Api\Permission\Transformers\RoleTransformer;
 use App\Domain\Permission\Actions\CreateRole;
 use App\Domain\Permission\Actions\DeleteRole;
@@ -27,16 +26,17 @@ class RoleController extends Controller
      */
     public function index(Request $request, PaginateRole $action): JsonResponse
     {
+        $this->authorize('viewAny', Role::class);
         $roles = $action->execute(
             $request->get('per_page') ?? 50,
             $request->query()
         );
+
         return fractal(
-                $roles,
-                new RoleTransformer()
-            )
-            ->respond()
-        ;
+            $roles,
+            new RoleTransformer()
+        )
+            ->respond();
     }
 
     /**
@@ -47,57 +47,52 @@ class RoleController extends Controller
      */
     public function show(Role $role): JsonResponse
     {
+        $this->authorize('view', Role::class);
+
         return fractal(
-                $role,
-                new RoleTransformer()
-            )
-            ->respond()
-        ;
+            $role,
+            new RoleTransformer()
+        )
+            ->respond();
     }
 
     /**
      * Create new role
      *
-     * @param RoleStore $request
+     * @param RoleRequest $request
      * @param CreateRole $action
      * @return JsonResponse
      */
-    public function store(RoleStore $request, CreateRole $action): JsonResponse
+    public function store(RoleRequest $request, CreateRole $action): JsonResponse
     {
-        $data = RoleDto::fromRequest($request);
-        $role = DB::transaction(function () use ($action, $data) {
-            return $action->execute($data);
-        });
+        $dto = RoleDto::fromRequest($request);
+        $role = DB::transaction(fn () => $action->execute($dto));
 
         return fractal(
-                $role,
-                new RoleTransformer()
-            )
-            ->respond(201)
-        ;
+            $role,
+            new RoleTransformer()
+        )
+            ->respond(201);
     }
 
     /**
      * Update role's data
      *
-     * @param RoleUpdate $request
+     * @param RoleRequest $request
      * @param Role $role
      * @param EditRole $action
      * @return JsonResponse
      */
-    public function update(RoleUpdate $request, Role $role, EditRole $action): JsonResponse
+    public function update(RoleRequest $request, Role $role, EditRole $action): JsonResponse
     {
-        $data = RoleDto::fromRequest($request);
-        $role = DB::transaction(function () use ($action, $data, $role) {
-            return $action->execute($data, $role);
-        });
+        $dto = RoleDto::fromRequest($request);
+        $role = DB::transaction(fn () => $action->execute($dto, $role));
 
         return fractal(
-                $role,
-                new RoleTransformer()
-            )
-            ->respond()
-        ;
+            $role,
+            new RoleTransformer()
+        )
+            ->respond();
     }
 
     /**
@@ -107,11 +102,10 @@ class RoleController extends Controller
      * @param DeleteRole $action
      * @return JsonResponse
      */
-    public function destroy(role $role, DeleteRole $action): JsonResponse
+    public function destroy(Role $role, DeleteRole $action): JsonResponse
     {
-        DB::transaction(function () use ($action, $role) {
-            return $action->execute($role);
-        });
+        $this->authorize('delete', Role::class);
+        DB::transaction(fn () => $action->execute($role));
 
         return response()->json([], 204);
     }

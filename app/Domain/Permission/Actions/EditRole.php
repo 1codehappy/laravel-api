@@ -8,7 +8,7 @@ use App\Support\Permission\DTOs\RoleDto;
 class EditRole
 {
     /**
-     * Update role's data
+     * Update role data.
      *
      * @param RoleDto $dto
      * @param Role $role
@@ -22,7 +22,7 @@ class EditRole
             $role->save();
         }
         if ($dto->hasPermissions()) {
-            $role->givePermissionTo($dto->permissions);
+            $role->syncPermissions($dto->permissions);
         }
 
         return $role;

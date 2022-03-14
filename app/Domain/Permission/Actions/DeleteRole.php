@@ -7,7 +7,7 @@ use App\Domain\Permission\Models\Role;
 class DeleteRole
 {
     /**
-     * Delete role
+     * Delete the role.
      *
      * @param Role $role
      * @return bool

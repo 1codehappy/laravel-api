@@ -3,12 +3,21 @@
 namespace App\Backend\Api\Permission\Transformers;
 
 use App\Domain\Permission\Models\Role;
-use App\Support\Concerns\Transformers\AddsTransformerCapabilities;
+use App\Support\Core\Concerns\Transformers\AddsTransformerCapabilities;
+use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\NullResource;
 use League\Fractal\TransformerAbstract;
 
 class RoleTransformer extends TransformerAbstract
 {
     use AddsTransformerCapabilities;
+
+    /**
+     * Default includes.
+     *
+     * @var array
+     */
+    protected $defaultIncludes = ['permissions'];
 
     /**
      * A Fractal transformer.
@@ -21,9 +30,26 @@ class RoleTransformer extends TransformerAbstract
         return $this->transformed([
             'id' => $role->uuid,
             'name' => $role->name,
-            'permissions' => $role->permissions->pluck('uuid'),
             'created_at' => $role->present()->createdAt,
             'updated_at' => $role->present()->updatedAt,
         ]);
+    }
+
+    /**
+     * Include permissions.
+     *
+     * @param Role $role
+     * @return Collection|NullResource
+     */
+    public function includePermissions(Role $role): Collection|NullResource
+    {
+        if ($role->permissions === null) {
+            return $this->null();
+        }
+
+        return $this->collection(
+            $role->permissions,
+            (new PermissionTransformer())->withoutTimestamps()
+        );
     }
 }

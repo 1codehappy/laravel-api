@@ -8,7 +8,7 @@ use App\Support\User\DTOs\UserDto;
 class ChangePassword
 {
     /**
-     * Change password
+     * Change the user's password.
      *
      * @param UserDto $dto
      * @param User $user
@@ -18,6 +18,7 @@ class ChangePassword
     {
         $user->password = bcrypt($dto->password);
         $user->save();
+
         return $user;
     }
 }
