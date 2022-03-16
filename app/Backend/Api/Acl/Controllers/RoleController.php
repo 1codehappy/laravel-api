@@ -44,7 +44,7 @@ class RoleController extends Controller
         return fractal(
             $roles,
             new RoleTransformer()
-        ) ->respond();
+        )->respond();
     }
 
     /**
@@ -58,7 +58,7 @@ class RoleController extends Controller
         return fractal(
             $role,
             new RoleTransformer()
-        ) ->respond();
+        )->respond();
     }
 
     /**
@@ -95,7 +95,7 @@ class RoleController extends Controller
         return fractal(
             $role,
             new RoleTransformer()
-        ) ->respond();
+        )->respond();
     }
 
     /**

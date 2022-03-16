@@ -22,11 +22,9 @@ class GetProfileController extends Controller
         ReadCachedRole $metaRole,
         ReadCachedPermission $metaPermission
     ): JsonResponse {
-        return fractal(
-            Auth::user(),
-            new UserTransformer()
-        )
+        return fractal(Auth::user(), new UserTransformer())
             ->addMeta('roles', $metaRole->execute())
-            ->addMeta('permissions', $metaPermission->execute()) ->respond();
+            ->addMeta('permissions', $metaPermission->execute())
+            ->respond();
     }
 }

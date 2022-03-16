@@ -9,6 +9,7 @@
 .phpstorm.meta.php
 .phpunit.result.cache
 _ide_helper.php
+composer.lock
 docker-compose.override.yml
 Homestead.json
 Homestead.yaml

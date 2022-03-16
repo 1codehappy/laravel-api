@@ -30,6 +30,7 @@ class PermissionController extends Controller
      */
     public function index(Request $request, PaginatePermission $action): JsonResponse
     {
+        $this->authorize('viewAny', Permission::class);
         $permissions = $action->execute(
             $request->get('per_page') ?? 50,
             $request->query()

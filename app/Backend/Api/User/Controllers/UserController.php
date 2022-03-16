@@ -36,12 +36,13 @@ class UserController extends Controller
      */
     public function index(Request $request, PaginateUser $action): JsonResponse
     {
+        $this->authorize('viewAny', User::class);
         $users = $action->execute(
             $request->get('per_page') ?? 50,
             $request->query()
         );
 
-        return fractal($users, new UserTransformer()) ->respond();
+        return fractal($users, new UserTransformer())->respond();
     }
 
     /**
@@ -52,7 +53,7 @@ class UserController extends Controller
      */
     public function show(User $user): JsonResponse
     {
-        return fractal($user, new UserTransformer()) ->respond();
+        return fractal($user, new UserTransformer())->respond();
     }
 
     /**
@@ -86,7 +87,7 @@ class UserController extends Controller
         $dto = UserDto::fromRequest($request);
         $user = DB::transaction(fn () => $action->execute($dto, $user));
 
-        return fractal($user, new UserTransformer()) ->respond();
+        return fractal($user, new UserTransformer())->respond();
     }
 
     /**

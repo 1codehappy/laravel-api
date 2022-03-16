@@ -23,10 +23,11 @@ class EditProfileController extends Controller
         ProfileUpdate $request,
         EditUser $action
     ): JsonResponse {
+        /** @var \App\Domain\User\Models\User $user */
         $user = Auth::user();
         $dto = UserDto::fromRequest($request);
         $user = DB::transaction(fn () => $action->execute($dto, $user));
 
-        return fractal($user, new UserTransformer()) ->respond();
+        return fractal($user, new UserTransformer())->respond();
     }
 }
