@@ -51,3 +51,6 @@ jobs:
 
     - name: Run Testsuite
       run: composer test
+
+    - name: Look for vulnerabilities
+      run: composer sec
