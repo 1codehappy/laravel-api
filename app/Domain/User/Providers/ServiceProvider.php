@@ -10,6 +10,7 @@ class ServiceProvider extends AggregateServiceProvider
      * {@inheritDoc}
      */
     protected $providers = [
+        AuthServiceProvider::class,
         DomainServiceProvider::class,
         EventServiceProvider::class,
     ];

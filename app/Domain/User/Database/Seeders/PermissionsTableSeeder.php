@@ -2,7 +2,7 @@
 
 namespace App\Domain\User\Database\Seeders;
 
-use App\Domain\Permission\Models\Permission;
+use App\Domain\Acl\Models\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
 

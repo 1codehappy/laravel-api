@@ -21,6 +21,7 @@ class ChangePasswordController extends Controller
         PasswordUpdate $request,
         ChangePassword $action
     ): JsonResponse {
+        /** @var \App\Domain\User\Models\User $user */
         $user = Auth::user();
         $dto = UserDto::fromRequest($request);
         $user = DB::transaction(function () use ($action, $dto, $user) {

@@ -4,14 +4,14 @@ namespace App\Domain\User\Models;
 
 use App\Domain\User\Database\Factories\UserFactory;
 use App\Domain\User\Presenters\UserPresenter;
-use App\Support\Concerns\Models\HasUuid;
+use App\Support\Core\Concerns\Models\HasUuid;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laracasts\Presenter\PresentableTrait;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * App\Domain\User\Models\User
@@ -60,7 +60,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'uuid',

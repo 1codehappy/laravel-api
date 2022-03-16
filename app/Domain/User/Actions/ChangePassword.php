@@ -8,16 +8,17 @@ use App\Support\User\DTOs\UserDto;
 class ChangePassword
 {
     /**
-     * Change password
+     * Change the user's password.
      *
-     * @param UserDto $dto
+     * @param UserDto $data
      * @param User $user
      * @return User
      */
-    public function execute(UserDto $dto, User $user): User
+    public function execute(UserDto $data, User $user): User
     {
-        $user->password = bcrypt($dto->password);
+        $user->password = bcrypt($data->password);
         $user->save();
+
         return $user;
     }
 }

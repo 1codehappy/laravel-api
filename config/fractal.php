@@ -1,6 +1,6 @@
 <?php
 
-use App\Support\Concerns\Transformers\DataArraySerializer;
+use App\Support\Core\Concerns\Transformers\DataArraySerializer;
 
 return [
     /*

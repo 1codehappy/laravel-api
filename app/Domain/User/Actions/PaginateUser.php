@@ -10,7 +10,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class PaginateUser
 {
     /**
-     * Paginate user
+     * Paginate users.
      *
      * @param int $perPage
      * @param array $query
@@ -23,13 +23,14 @@ class PaginateUser
                 'name',
                 AllowedFilter::exact('email'),
             ])
-            ->defaultSort('name')
+            ->defaultSort('-updated_at')
             ->allowedSorts([
                 'name',
+                'email',
                 'created_at',
+                'updated_at',
             ])
             ->paginate($perPage)
-            ->appends($query)
-        ;
+            ->appends($query);
     }
 }
