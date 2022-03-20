@@ -13,8 +13,10 @@ parameters:
     - '#Access to an undefined property [a-zA-Z0-9\\\|_<>]+::\$[a-zA-Z0-9\\_]+#'
     - '#Call to an undefined static method [::a-zA-Z0-9\\_]+\(\)#'
 
+  # Github actions?
   excludePaths:
-    - ./tests/*
+    - app/Backend/Api/User/Transformers/UserTransformer.php
+    - app/Support/Core/Concerns/Transformers/DataArraySerializer.php
 
   checkMissingIterableValueType: false
   treatPhpDocTypesAsCertain: false
