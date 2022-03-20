@@ -2,8 +2,9 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Laravel Apis",
-        "description": "A boilerplate for Laravel Apis",
+        "description": "A simplest boilerplate for Laravel Apis",
         "contact": {
+            "name": "Gilberto Junior",
             "email": "contact@codehappy.com"
         },
         "license": {
@@ -12,27 +13,782 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/auth/login": {
+        "/permissions": {
+            "get": {
+                "tags": [
+                    "ACL"
+                ],
+                "summary": "Get permission list.",
+                "description": "Paginate all permissions.",
+                "operationId": "paginatePermission",
+                "parameters": [
+                    {
+                        "name": "filter[name]",
+                        "in": "query",
+                        "description": "Search by permission name.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort by.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "name",
+                                "-name",
+                                "created_at",
+                                "-created_at",
+                                "updated_at",
+                                "-updated_at"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Get permissions by page.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Show x permissions per page.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#components/schemas/Permission"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "pagination": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#components/schemas/Pagination"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "User doesn't have the right permissions.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Forbidden."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/roles": {
+            "get": {
+                "tags": [
+                    "ACL"
+                ],
+                "summary": "Get role list.",
+                "description": "Paginate all roles.",
+                "operationId": "paginateRole",
+                "parameters": [
+                    {
+                        "name": "filter[name]",
+                        "in": "query",
+                        "description": "Search by role name.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort by.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "name",
+                                "-name",
+                                "created_at",
+                                "-created_at",
+                                "updated_at",
+                                "-updated_at"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Get permissions by page.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Show x permissions per page.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#components/schemas/Role"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "pagination": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#components/schemas/Role"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "User doesn't have the right permissions.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Forbidden."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
-                    "Authentication"
+                    "ACL"
                 ],
-                "summary": "Sign in",
-                "description": "Get a JWT via given credentials",
-                "operationId": "login",
+                "summary": "Create a new role.",
+                "description": "Create a new role with permissions.",
+                "operationId": "createRole",
                 "requestBody": {
+                    "description": "Form request.",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserLogin"
+                                "$ref": "#/components/schemas/RoleRequest"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Created",
+                        "description": "Created.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "": {
+                                                    "$ref": "#components/schemas/Role"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "User doesn't have the right permissions.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Forbidden."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "field1": [
+                                            "The field1 field is required."
+                                        ],
+                                        "field2": [
+                                            "The selected field2 is invalid."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/roles/{uuid}": {
+            "get": {
+                "tags": [
+                    "ACL"
+                ],
+                "summary": "Get the role data.",
+                "description": "Display the role data.",
+                "operationId": "getRole",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "The UUID of the role",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#components/schemas/Role"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "pagination": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#components/schemas/Pagination"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "User doesn't have the right permissions.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Forbidden."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Role not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Not found."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "ACL"
+                ],
+                "summary": "Update the role data.",
+                "description": "Update the role with permissions.",
+                "operationId": "updateRole",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "The UUID of the role",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Form request.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "": {
+                                                    "$ref": "#components/schemas/Role"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "User doesn't have the right permissions.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Forbidden."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "field1": [
+                                            "The field1 field is required."
+                                        ],
+                                        "field2": [
+                                            "The selected field2 is invalid."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "ACL"
+                ],
+                "summary": "Delete the role data.",
+                "description": "Remove the role. The permissions related with the role won't be removed.",
+                "operationId": "deleteRole",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "The UUID of the role",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Deleted."
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "User doesn't have the right permissions.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Forbidden."
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Role not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Not found."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/me/password": {
+            "put": {
+                "tags": [
+                    "Logged User"
+                ],
+                "summary": "Change the user's password.",
+                "description": "Need to stay logged in to change the password.",
+                "operationId": "changePassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePasswordRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Password changed successfully"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "email": [
+                                            "The email field is required."
+                                        ],
+                                        "password": [
+                                            "The selected password is invalid."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/me": {
+            "get": {
+                "tags": [
+                    "Logged User"
+                ],
+                "summary": "Get the user's profile.",
+                "description": "Display the user's profile.",
+                "operationId": "getProfile",
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "": {
+                                                    "$ref": "#components/schemas/User"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Logged User"
+                ],
+                "summary": "Edit the user's profile.",
+                "description": "Need to stay logged in to update the user's profile.",
+                "operationId": "updateProfile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EditProfileRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User profile updated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "email": [
+                                            "The email must be a valid email address."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign in.",
+                "description": "Registered users are able to log in.",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "Form request.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -42,11 +798,11 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "Unauthorized.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
                                     "message": "Invalid credentials."
@@ -55,20 +811,20 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity",
+                        "description": "Validation error.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
                                     "message": "The given data was invalid.",
                                     "errors": {
-                                        "status_code": 422,
-                                        "field_name": [
-                                            "Error description 1",
-                                            "Error description 2",
-                                            "..."
+                                        "email": [
+                                            "The email field is required."
+                                        ],
+                                        "password": [
+                                            "The selected email is invalid."
                                         ]
                                     }
                                 }
@@ -81,68 +837,55 @@
         "/auth/logout": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Auth"
                 ],
-                "summary": "Log out",
-                "description": "Invalidate the token",
+                "summary": "Sign out.",
+                "description": "Logged users are able to log out.",
+                "operationId": "logout",
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Ok.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "message": "Successfully logged out."
+                                    "message": "You've logged out successfully."
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "Unauthorized.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
                                     "message": "Unauthenticated."
                                 }
                             }
                         }
-                    },
-                    "403": {
-                        "description": "Access denied",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
                     }
                 },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                "security": {
+                    "bearerAuth": {}
+                }
             }
         },
         "/auth/refresh": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Auth"
                 ],
-                "summary": "Refresh token",
-                "description": "Generate a new valid token",
+                "summary": "Refresh the token.",
+                "description": "Logged users are able to refresh the JWT Token.",
+                "operationId": "refreshToken",
                 "responses": {
                     "201": {
-                        "description": "Created",
+                        "description": "Created.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -152,158 +895,11 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "Unauthorized.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Access denied",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/auth/me": {
-            "get": {
-                "tags": [
-                    "Profile"
-                ],
-                "summary": "Get user's profile information",
-                "description": "Returns user's profile data",
-                "operationId": "getUserProfile",
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/User"
-                                        },
-                                        "meta": {
-                                            "properties": {
-                                                "roles": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/RoleShort"
-                                                    },
-                                                    "example": [
-                                                        {
-                                                            "id": "4bc42490-311f-4945-8896-3341f2ecc31c",
-                                                            "name": "Administrator"
-                                                        },
-                                                        {
-                                                            "id": "805d864f-4233-429b-af61-eb3373ac27b6",
-                                                            "name": "Developer"
-                                                        }
-                                                    ]
-                                                },
-                                                "permissions": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/PermissionShort"
-                                                    },
-                                                    "example": [
-                                                        {
-                                                            "id": "96bc4181-02b1-43e9-a304-6eb9373895b8",
-                                                            "name": "permissions.read"
-                                                        },
-                                                        {
-                                                            "id": "c411b9d7-4c16-4a2f-8055-89cd2d8f16a8",
-                                                            "name": "roles.create"
-                                                        },
-                                                        {
-                                                            "id": "e62cb99f-8644-4886-8e93-c80308fda49f",
-                                                            "name": "roles.read"
-                                                        },
-                                                        {
-                                                            "id": "3493826c-cb11-48c8-80bc-5fbab01b3654",
-                                                            "name": "roles.update"
-                                                        },
-                                                        {
-                                                            "id": "daa9c159-cabd-4ef1-b7cc-307620c3a3e4",
-                                                            "name": "roles.delete"
-                                                        },
-                                                        {
-                                                            "id": "3016ec07-9265-43c7-a49d-a44ac1e9b600",
-                                                            "name": "users.create"
-                                                        },
-                                                        {
-                                                            "id": "80ff5259-adfa-4ba7-8fa5-4bac6591b828",
-                                                            "name": "users.read"
-                                                        },
-                                                        {
-                                                            "id": "09bbb037-cb8e-4867-9c94-90d7577e4e71",
-                                                            "name": "users.update"
-                                                        },
-                                                        {
-                                                            "id": "6442f069-ddbf-4938-bd9a-33551bc3a5cf",
-                                                            "name": "users.delete"
-                                                        },
-                                                        {
-                                                            "id": "2c3b38bb-f19d-4e1f-abf8-03d0aa6b6fe2",
-                                                            "name": "failed_jobs.read"
-                                                        },
-                                                        {
-                                                            "id": "73e2e120-8f7c-4df0-b423-3e832af12760",
-                                                            "name": "projects.create"
-                                                        },
-                                                        {
-                                                            "id": "5f2dbb73-32cc-4d5f-8f3f-5c9524ac36d5",
-                                                            "name": "projects.read"
-                                                        },
-                                                        {
-                                                            "id": "a9b35d9a-cba4-41cd-8ba9-a7d9f431e368",
-                                                            "name": "projects.update"
-                                                        },
-                                                        {
-                                                            "id": "28d6ac5d-974c-436d-9882-c817aa67bb3b",
-                                                            "name": "projects.delete"
-                                                        },
-                                                        {
-                                                            "id": "d93d699c-9791-4383-92e8-01e6dd8051fd",
-                                                            "name": "projects.a103e4a1-b3e1-4d1a-bf5b-05f32c7561bf"
-                                                        }
-                                                    ]
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
                                     "message": "Unauthenticated."
@@ -312,760 +908,24 @@
                         }
                     }
                 },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Profile"
-                ],
-                "summary": "Update my profile",
-                "description": "Change my profile's data",
-                "operationId": "updateMyProfile",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProfileUpdate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/User"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "The given data was invalid.",
-                                    "errors": {
-                                        "status_code": 422,
-                                        "field_name": [
-                                            "Error description 1",
-                                            "Error description 2",
-                                            "..."
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/auth/me/password": {
-            "put": {
-                "tags": [
-                    "Profile"
-                ],
-                "summary": "Update user's password",
-                "description": "Change user's password",
-                "operationId": "updateUserPassword",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/PasswordUpdate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "Password successfully changed."
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "The given data was invalid.",
-                                    "errors": {
-                                        "status_code": 422,
-                                        "field_name": [
-                                            "Error description 1",
-                                            "Error description 2",
-                                            "..."
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/permissions": {
-            "get": {
-                "tags": [
-                    "Roles & Permissions"
-                ],
-                "summary": "Get list of permissions",
-                "description": "Returns list of permissions",
-                "operationId": "getPermissionsList",
-                "parameters": [
-                    {
-                        "name": "filter[name]",
-                        "in": "query",
-                        "description": "The name of permission",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sort by name or created_at",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "name",
-                                "-name",
-                                "created_at",
-                                "-created_at"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Current page",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    },
-                    {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Rows per page",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Permission"
-                                            }
-                                        },
-                                        "meta": {
-                                            "properties": {
-                                                "pagination": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Pagination"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Access denied",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/roles": {
-            "get": {
-                "tags": [
-                    "Roles & Permissions"
-                ],
-                "summary": "Get list of roles",
-                "description": "Returns list of roles",
-                "operationId": "getRolesList",
-                "parameters": [
-                    {
-                        "name": "filter[name]",
-                        "in": "query",
-                        "description": "The name of role",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sort by name or created_at",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "name",
-                                "-name",
-                                "created_at",
-                                "-created_at"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Current page",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    },
-                    {
-                        "name": "per_page",
-                        "in": "query",
-                        "description": "Rows per page",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Role"
-                                            }
-                                        },
-                                        "meta": {
-                                            "properties": {
-                                                "pagination": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Pagination"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Access denied",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Roles & Permissions"
-                ],
-                "summary": "Create a new role",
-                "description": "Returns role data",
-                "operationId": "createRole",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RoleStore"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Role"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Access denied",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "The given data was invalid.",
-                                    "errors": {
-                                        "field_name": [
-                                            "Error description 1",
-                                            "Error description 2",
-                                            "..."
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/roles/{id}": {
-            "get": {
-                "tags": [
-                    "Roles & Permissions"
-                ],
-                "summary": "Get role information",
-                "description": "Returns role data",
-                "operationId": "getRoleById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The ID of role",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/Role"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 401,
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Access denied",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 403,
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 404,
-                                    "message": "Role not found."
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Roles & Permissions"
-                ],
-                "summary": "Update role's data",
-                "description": "Returns role data",
-                "operationId": "updateRole",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The ID of role",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RoleUpdate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/Role"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Access denied",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "Role not found."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "The given data was invalid.",
-                                    "errors": {
-                                        "field_name": [
-                                            "Error description 1",
-                                            "Error description 2",
-                                            "..."
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Roles & Permissions"
-                ],
-                "summary": "Delete role",
-                "description": "Remove role from database",
-                "operationId": "deleteRole",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The ID of role",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No content"
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 401,
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Access denied",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 403,
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Fatal error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 500,
-                                    "message": "An error occurs while deleting the role."
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                "security": {
+                    "bearerAuth": {}
+                }
             }
         },
         "/users": {
             "get": {
                 "tags": [
-                    "Users"
+                    "User"
                 ],
-                "summary": "Get list of users",
-                "description": "Returns list of users",
-                "operationId": "getUsersList",
+                "summary": "Get user list.",
+                "description": "Paginate all users.",
+                "operationId": "paginateUser",
                 "parameters": [
                     {
                         "name": "filter[name]",
                         "in": "query",
-                        "description": "Name",
+                        "description": "Search by user's name.",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -1074,7 +934,7 @@
                     {
                         "name": "filter[email]",
                         "in": "query",
-                        "description": "Email",
+                        "description": "Search by user's email.",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -1083,7 +943,7 @@
                     {
                         "name": "sort",
                         "in": "query",
-                        "description": "Sort by name or created_at",
+                        "description": "Sort by.",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -1091,32 +951,36 @@
                                 "name",
                                 "-name",
                                 "created_at",
-                                "-created_at"
+                                "-created_at",
+                                "updated_at",
+                                "-updated_at"
                             ]
                         }
                     },
                     {
                         "name": "page",
                         "in": "query",
-                        "description": "Current page",
+                        "description": "Get users by page.",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
-                        "name": "limit",
+                        "name": "per_page",
                         "in": "query",
-                        "description": "Rows per page",
+                        "description": "Show x users per page.",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Success.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1124,7 +988,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/User"
+                                                "$ref": "#components/schemas/User"
                                             }
                                         },
                                         "meta": {
@@ -1132,7 +996,7 @@
                                                 "pagination": {
                                                     "type": "array",
                                                     "items": {
-                                                        "$ref": "#/components/schemas/Pagination"
+                                                        "$ref": "#components/schemas/User"
                                                     }
                                                 }
                                             },
@@ -1145,153 +1009,65 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "User not authenticated.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 401,
                                     "message": "Unauthenticated."
                                 }
                             }
                         }
                     },
                     "403": {
-                        "description": "Access denied",
+                        "description": "User doesn't have the right permissions.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 403,
-                                    "message": "User does not have the right permissions."
+                                    "message": "Forbidden."
                                 }
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             },
             "post": {
                 "tags": [
-                    "Users"
+                    "User"
                 ],
-                "summary": "Create a new user",
-                "description": "Returns user data",
+                "summary": "Create a new user.",
+                "description": "Create a new user with permissions.",
                 "operationId": "createUser",
                 "requestBody": {
+                    "description": "Form request.",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserStore"
+                                "$ref": "#/components/schemas/UserRequest"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 401,
-                                    "message": "Unauthenticated."
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Access denied",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 403,
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "message": "The given data was invalid.",
-                                    "errors": {
-                                        "field_name": [
-                                            "Error description 1",
-                                            "Error description 2",
-                                            "..."
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/users/{id}": {
-            "get": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Get user information",
-                "description": "Returns user data",
-                "operationId": "getUserById",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The ID of user",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "d3ba0542-73b2-4b19-be42-e5fa528d1a94"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok",
+                        "description": "Created.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/components/schemas/User"
+                                            "properties": {
+                                                "": {
+                                                    "$ref": "#components/schemas/User"
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -1300,92 +1076,181 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "User not authenticated.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 401,
                                     "message": "Unauthenticated."
                                 }
                             }
                         }
                     },
                     "403": {
-                        "description": "Access denied",
+                        "description": "User doesn't have the right permissions.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 403,
-                                    "message": "User does not have the right permissions."
+                                    "message": "Forbidden."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "field1": [
+                                            "The field1 field is required."
+                                        ],
+                                        "field2": [
+                                            "The selected field2 is invalid."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{uuid}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get the user data.",
+                "description": "Display the user data.",
+                "operationId": "getUser",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "The UUID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "": {
+                                                    "$ref": "#components/schemas/User"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "User doesn't have the right permissions.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Forbidden."
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Not found",
+                        "description": "User not found.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 404,
-                                    "message": "User not found."
+                                    "message": "Not found."
                                 }
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             },
             "put": {
                 "tags": [
-                    "Users"
+                    "User"
                 ],
-                "summary": "Update user's data",
-                "description": "Returns user data",
+                "summary": "Update the user data.",
+                "description": "Update the user with permissions.",
                 "operationId": "updateUser",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
-                        "description": "The ID of user",
+                        "description": "The UUID of the user",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "example": "d3ba0542-73b2-4b19-be42-e5fa528d1a94"
+                            "example": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d"
                         }
                     }
                 ],
                 "requestBody": {
+                    "description": "Form request.",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserUpdate"
+                                "$ref": "#/components/schemas/UserRequest"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Updated.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/components/schemas/User"
+                                            "properties": {
+                                                "": {
+                                                    "$ref": "#components/schemas/User"
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -1394,212 +1259,318 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "User not authenticated.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 401,
                                     "message": "Unauthenticated."
                                 }
                             }
                         }
                     },
                     "403": {
-                        "description": "Access denied",
+                        "description": "User doesn't have the right permissions.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 403,
-                                    "message": "User does not have the right permissions."
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 404,
-                                    "message": "User not found."
+                                    "message": "Forbidden."
                                 }
                             }
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity",
+                        "description": "Validation error.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
                                     "message": "The given data was invalid.",
                                     "errors": {
-                                        "field_name": [
-                                            "Error description 1",
-                                            "Error description 2",
-                                            "..."
+                                        "field1": [
+                                            "The field1 field is required."
+                                        ],
+                                        "field2": [
+                                            "The selected field2 is invalid."
                                         ]
                                     }
                                 }
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
-                    "Users"
+                    "User"
                 ],
-                "summary": "Delete user",
-                "description": "Remove user from database",
+                "summary": "Delete the user data.",
+                "description": "Remove the user. The permissions related with the user won't be removed.",
                 "operationId": "deleteUser",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
-                        "description": "The ID of user",
+                        "description": "The UUID of the user",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "example": "d3ba0542-73b2-4b19-be42-e5fa528d1a94"
+                            "example": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d"
                         }
                     }
                 ],
                 "responses": {
                     "204": {
-                        "description": "No content"
+                        "description": "Deleted."
                     },
                     "401": {
-                        "description": "Unauthorized",
+                        "description": "User not authenticated.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 401,
                                     "message": "Unauthenticated."
                                 }
                             }
                         }
                     },
                     "403": {
-                        "description": "Access denied",
+                        "description": "User doesn't have the right permissions.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 403,
-                                    "message": "User does not have the right permissions."
+                                    "message": "Forbidden."
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Not found",
+                        "description": "User not found.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Response"
+                                    "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "status_code": 404,
-                                    "message": "User not found."
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Fatal error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Response"
-                                },
-                                "example": {
-                                    "status_code": 500,
-                                    "message": "An error occurs while deleting the user."
+                                    "message": "Not found."
                                 }
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             }
         }
     },
     "components": {
         "schemas": {
-            "PasswordUpdate": {
-                "description": "Request data for changing password",
+            "Permission": {
+                "description": "The schema of the permission.",
+                "properties": {
+                    "id": {
+                        "description": "The UUID of the role.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The name of the role.",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "The date of the creation.",
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "updated_at": {
+                        "description": "The date of the last update.",
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "id": "51a0f12a-5e73-4c04-a5aa-f9322e61e2b7",
+                    "name": "permission.viewAny",
+                    "created_at": "2022-03-18 20:00:00",
+                    "updated_at": "2022-03-18 20:00:00"
+                }
+            },
+            "Role": {
+                "description": "The schema of the role.",
+                "properties": {
+                    "id": {
+                        "description": "The UUID of the role.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The name of the role.",
+                        "type": "string"
+                    },
+                    "permissions": {
+                        "description": "The permissions of the role.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Permission"
+                        }
+                    },
+                    "created_at": {
+                        "description": "The date of the creation.",
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "updated_at": {
+                        "description": "The date of the last update.",
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "id": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d",
+                    "name": "Administrator",
+                    "permissions": [
+                        "permissions.viewAny",
+                        "roles.viewAny",
+                        "roles.view",
+                        "roles.create",
+                        "roles.update",
+                        "roles.delete",
+                        "users.viewAny",
+                        "users.view",
+                        "users.create",
+                        "users.update",
+                        "users.delete"
+                    ],
+                    "created_at": "2022-03-18 20:00:00",
+                    "updated_at": "2022-03-18 20:00:00"
+                }
+            },
+            "RoleRequest": {
+                "properties": {
+                    "name": {
+                        "description": "The name of the role.",
+                        "type": "string"
+                    },
+                    "permissions": {
+                        "description": "The set of permission names.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "name": "Administrator",
+                    "permissions": [
+                        "permissions.viewAny",
+                        "roles.viewAny",
+                        "roles.view",
+                        "roles.create",
+                        "roles.update",
+                        "roles.delete",
+                        "users.viewAny",
+                        "users.view",
+                        "users.create",
+                        "users.update",
+                        "users.delete"
+                    ]
+                }
+            },
+            "ChangePasswordRequest": {
+                "description": "Request data for changing user's password.",
                 "required": [
                     "password",
                     "password_confirmation"
                 ],
                 "properties": {
                     "password": {
+                        "description": "The new password of the user.",
                         "type": "string"
                     },
                     "password_confirmation": {
+                        "description": "The password confirmation of the user.",
                         "type": "string"
                     }
                 },
                 "type": "object",
                 "example": {
-                    "password": "abc9876543",
-                    "password_confirmation": "abc9876543"
+                    "password": "secret1234",
+                    "password_confirmation": "secret1234"
                 }
             },
-            "ProfileUpdate": {
-                "description": "Request data for update user's profile",
+            "EditProfileRequest": {
+                "description": "Request data for updating user's profile.",
+                "required": [
+                    "name",
+                    "email"
+                ],
                 "properties": {
                     "name": {
+                        "description": "The new name of the user.",
                         "type": "string"
                     },
                     "email": {
+                        "description": "The new email of the user.",
                         "type": "string",
                         "format": "email"
                     }
                 },
                 "type": "object",
                 "example": {
-                    "name": "John Doe",
-                    "email": "admin@example.com"
+                    "name": "Gilberto Junior",
+                    "email": "olamundo@gmail.com"
+                }
+            },
+            "LoginRequest": {
+                "description": "Request data to generate a valid token to authenticate.",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "The email of the user.",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "The password of the user.",
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "email": "olamundo@gmail.com",
+                    "password": "secret1234"
                 }
             },
             "Token": {
                 "description": "The response when the token was generated.",
+                "required": [
+                    "name",
+                    "email"
+                ],
                 "properties": {
                     "message": {
                         "description": "The message from response.",
                         "type": "string"
                     },
                     "data": {
+                        "description": "The token data.",
                         "properties": {
                             "access_token": {
-                                "description": "The JWT token to authorization.",
+                                "description": "The new JWT token.",
                                 "type": "string"
                             },
                             "bearer_type": {
@@ -1625,426 +1596,124 @@
                     }
                 }
             },
-            "UserLogin": {
-                "description": "Request data for login",
-                "required": [
-                    "email",
-                    "password"
-                ],
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "password": {
-                        "type": "string",
-                        "format": "password"
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "email": "john.doe@example.com",
-                    "password": "secret1234"
-                }
-            },
-            "Permission": {
-                "description": "permission data",
-                "properties": {
-                    "id": {
-                        "description": "The ID of permission",
-                        "type": "string"
-                    },
-                    "name": {
-                        "description": "The name of permission",
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "description": "The date of creation",
-                        "type": "string",
-                        "format": "datetime"
-                    },
-                    "updated_at": {
-                        "description": "The date of modification",
-                        "type": "string",
-                        "format": "datetime"
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "id": "80ff5259-adfa-4ba7-8fa5-4bac6591b828",
-                    "name": "users.read",
-                    "created_at": "2020-10-22 16:31:03",
-                    "updated_at": "2020-10-22 16:31:03"
-                }
-            },
-            "PermissionShort": {
-                "description": "permission data",
-                "properties": {
-                    "id": {
-                        "description": "The ID of permission",
-                        "type": "string"
-                    },
-                    "name": {
-                        "description": "The name of permission",
-                        "type": "string"
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "id": "d93d699c-9791-4383-92e8-01e6dd8051fd",
-                    "name": "projects.a103e4a1-b3e1-4d1a-bf5b-05f32c7561bf"
-                }
-            },
-            "Role": {
-                "description": "Role data",
-                "properties": {
-                    "id": {
-                        "description": "The ID of role",
-                        "type": "string"
-                    },
-                    "name": {
-                        "description": "The name of role",
-                        "type": "string"
-                    },
-                    "permissions": {
-                        "description": "The permissions of user",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "created_at": {
-                        "description": "The date of creation",
-                        "type": "string",
-                        "format": "datetime"
-                    },
-                    "updated_at": {
-                        "description": "The date of modification",
-                        "type": "string",
-                        "format": "datetime"
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "id": "4bc42490-311f-4945-8896-3341f2ecc31c",
-                    "name": "Administrator",
-                    "permissions": [
-                        "96bc4181-02b1-43e9-a304-6eb9373895b8",
-                        "c411b9d7-4c16-4a2f-8055-89cd2d8f16a8",
-                        "e62cb99f-8644-4886-8e93-c80308fda49f",
-                        "3493826c-cb11-48c8-80bc-5fbab01b3654",
-                        "daa9c159-cabd-4ef1-b7cc-307620c3a3e4",
-                        "3016ec07-9265-43c7-a49d-a44ac1e9b600",
-                        "80ff5259-adfa-4ba7-8fa5-4bac6591b828",
-                        "09bbb037-cb8e-4867-9c94-90d7577e4e71",
-                        "6442f069-ddbf-4938-bd9a-33551bc3a5cf",
-                        "2c3b38bb-f19d-4e1f-abf8-03d0aa6b6fe2"
-                    ],
-                    "created_at": "2020-10-22 16:31:03",
-                    "updated_at": "2020-10-22 16:31:03"
-                }
-            },
-            "RoleShort": {
-                "description": "Role data",
-                "properties": {
-                    "id": {
-                        "description": "The ID of role",
-                        "type": "string"
-                    },
-                    "name": {
-                        "description": "The name of role",
-                        "type": "string"
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "id": "4bc42490-311f-4945-8896-3341f2ecc31c",
-                    "name": "Administrator"
-                }
-            },
-            "RoleStore": {
-                "description": "Request data for creating new role",
-                "required": [
-                    "name"
-                ],
-                "properties": {
-                    "name": {
-                        "description": "The name of role",
-                        "type": "string"
-                    },
-                    "permissions": {
-                        "description": "The permissions can be the ID or the name",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "name": "Administrator",
-                    "permissions": [
-                        "96bc4181-02b1-43e9-a304-6eb9373895b8",
-                        "c411b9d7-4c16-4a2f-8055-89cd2d8f16a8",
-                        "e62cb99f-8644-4886-8e93-c80308fda49f",
-                        "3493826c-cb11-48c8-80bc-5fbab01b3654",
-                        "daa9c159-cabd-4ef1-b7cc-307620c3a3e4",
-                        "3016ec07-9265-43c7-a49d-a44ac1e9b600",
-                        "80ff5259-adfa-4ba7-8fa5-4bac6591b828",
-                        "09bbb037-cb8e-4867-9c94-90d7577e4e71",
-                        "6442f069-ddbf-4938-bd9a-33551bc3a5cf",
-                        "2c3b38bb-f19d-4e1f-abf8-03d0aa6b6fe2"
-                    ]
-                }
-            },
-            "RoleUpdate": {
-                "description": "Request data for updating role",
-                "properties": {
-                    "name": {
-                        "description": "The name of role",
-                        "type": "string"
-                    },
-                    "permissions": {
-                        "description": "The permissions can be the ID or the name",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "name": "Administrator",
-                    "permissions": [
-                        "96bc4181-02b1-43e9-a304-6eb9373895b8",
-                        "c411b9d7-4c16-4a2f-8055-89cd2d8f16a8",
-                        "e62cb99f-8644-4886-8e93-c80308fda49f",
-                        "3493826c-cb11-48c8-80bc-5fbab01b3654",
-                        "daa9c159-cabd-4ef1-b7cc-307620c3a3e4",
-                        "3016ec07-9265-43c7-a49d-a44ac1e9b600",
-                        "80ff5259-adfa-4ba7-8fa5-4bac6591b828",
-                        "09bbb037-cb8e-4867-9c94-90d7577e4e71",
-                        "6442f069-ddbf-4938-bd9a-33551bc3a5cf",
-                        "2c3b38bb-f19d-4e1f-abf8-03d0aa6b6fe2"
-                    ]
-                }
-            },
-            "User": {
-                "description": "User's data",
-                "properties": {
-                    "id": {
-                        "description": "The ID of user",
-                        "type": "string"
-                    },
-                    "name": {
-                        "description": "The name of user",
-                        "type": "string"
-                    },
-                    "email": {
-                        "description": "The email of user",
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "roles": {
-                        "description": "The roles of user",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "permissions": {
-                        "description": "The permissions of user",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "created_at": {
-                        "description": "The date of creation",
-                        "type": "string",
-                        "format": "datetime"
-                    },
-                    "updated_at": {
-                        "description": "The date of modification",
-                        "type": "string",
-                        "format": "datetime"
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "id": "d3ba0542-73b2-4b19-be42-e5fa528d1a94",
-                    "name": "John Doe",
-                    "email": "john.doe@example.com",
-                    "roles": [
-                        "4bc42490-311f-4945-8896-3341f2ecc31c",
-                        "805d864f-4233-429b-af61-eb3373ac27b6"
-                    ],
-                    "permissions": [
-                        "d93d699c-9791-4383-92e8-01e6dd8051fd"
-                    ],
-                    "created_at": "2020-10-22 16:31:03",
-                    "updated_at": "2020-10-22 16:31:03"
-                }
-            },
-            "UserStore": {
-                "description": "Request data for creating new user",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "password_confirmation": {
-                        "type": "string"
-                    },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "permissions": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "name": "John Doe",
-                    "email": "admin@example.com",
-                    "password": "secret1234",
-                    "password_confirmation": "secret1234",
-                    "roles": [
-                        "4bc42490-311f-4945-8896-3341f2ecc31c",
-                        "805d864f-4233-429b-af61-eb3373ac27b6"
-                    ],
-                    "permissions": [
-                        "d93d699c-9791-4383-92e8-01e6dd8051fd"
-                    ]
-                }
-            },
-            "UserUpdate": {
-                "description": "Request data for updating user",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "permissions": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "name": "John Doe",
-                    "email": "admin@example.com",
-                    "roles": [
-                        "4bc42490-311f-4945-8896-3341f2ecc31c",
-                        "805d864f-4233-429b-af61-eb3373ac27b6"
-                    ],
-                    "permissions": [
-                        "d93d699c-9791-4383-92e8-01e6dd8051fd"
-                    ]
-                }
-            },
-            "Pagination": {
-                "description": "The metadata response of pagination.",
-                "properties": {
-                    "total": {
-                        "description": "The number of rows",
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "count": {
-                        "description": "The number of rows on the current page",
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "per_page": {
-                        "description": "The quantity of rows per page",
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "current_page": {
-                        "description": "The current page",
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "total_pages": {
-                        "description": "The number of pages",
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "links": {
-                        "description": "Links to paginate",
-                        "type": "array",
-                        "items": {}
-                    }
-                },
-                "type": "object",
-                "example": {
-                    "total": 1,
-                    "count": 1,
-                    "per_page": 50,
-                    "current_page": 1,
-                    "total_pages": 1,
-                    "links": []
-                }
-            },
-            "Response": {
-                "description": "Api response",
+            "JsonResponse": {
+                "description": "The structure of the api response.",
                 "properties": {
                     "message": {
-                        "description": "The response message",
+                        "description": "The message of the response.",
                         "type": "string"
                     },
                     "errors": {
-                        "description": "The structure of api response",
+                        "description": "The error messages of the response if exists.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "description": "The schema of the user.",
+                "properties": {
+                    "id": {
+                        "description": "The UUID of the user.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The name of the user.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The email of the user.",
+                        "type": "string"
+                    },
+                    "roles": {
+                        "description": "The roles of the user.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Role"
+                        }
+                    },
+                    "permissions": {
+                        "description": "The permissions of the user.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Permission"
+                        }
+                    },
+                    "created_at": {
+                        "description": "The date of the creation.",
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "updated_at": {
+                        "description": "The date of the last update.",
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "id": "beceedca-46b4-4067-a636-eb9dd5ac5569",
+                    "name": "John Doe",
+                    "email": "john@example.com",
+                    "roles": [
+                        {
+                            "id": "75a0f2d3-a0d3-4b0b-b02f-65e70656361d",
+                            "name": "Administrator"
+                        }
+                    ],
+                    "permissions": [
+                        {
+                            "id": "aa6fa2a0-65a9-4ea6-84ff-7a82faa10439",
+                            "name": "custom.permission1"
+                        },
+                        {
+                            "id": "a455ac30-f00d-4a23-a0f9-315e03d82f04",
+                            "name": "custom.permission2"
+                        }
+                    ],
+                    "created_at": "2022-03-18 20:00:00",
+                    "updated_at": "2022-03-18 20:00:00"
+                }
+            },
+            "UserRequest": {
+                "properties": {
+                    "name": {
+                        "description": "The name of the user.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The email of the user.",
+                        "type": "string"
+                    },
+                    "roles": {
+                        "description": "The set of role names.",
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
                     },
-                    "data": {
-                        "description": "The data of api response",
+                    "permissions": {
+                        "description": "The set of permission names.",
                         "type": "array",
                         "items": {
-                            "type": "object"
-                        }
-                    },
-                    "meta": {
-                        "description": "The data of api response",
-                        "type": "array",
-                        "items": {
-                            "type": "object"
+                            "type": "string"
                         }
                     }
                 },
                 "type": "object",
                 "example": {
-                    "message": "Any message",
-                    "errors": [],
-                    "data": [],
-                    "meta": []
+                    "name": "John Doe",
+                    "email": "john@exampple.com",
+                    "roles": [
+                        "Administrator"
+                    ],
+                    "permissions": [
+                        "custom.permission1",
+                        "custom.permission2"
+                    ]
                 }
             }
         },

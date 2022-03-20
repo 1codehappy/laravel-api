@@ -14,8 +14,7 @@ trait HasTimestamps
     public function createdAt(): ?string
     {
         return $this->created_at ?
-            Carbon::parse($this->created_at)->toDateTimeString()
-        :
+            Carbon::parse($this->created_at)->toDateTimeString() :
             null;
     }
 
@@ -27,8 +26,7 @@ trait HasTimestamps
     public function updatedAt(): ?string
     {
         return $this->updated_at ?
-            Carbon::parse($this->updated_at)->toDateTimeString()
-        :
+            Carbon::parse($this->updated_at)->toDateTimeString() :
             null;
     }
 }

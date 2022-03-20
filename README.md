@@ -29,7 +29,7 @@ See the directory structure bellow:
 |-- app/
     |-- Backend # Api & Artisan commands
     |-- Domain # Domains
-    |-- Support # Commons
+    |-- Support # Commons & Api Documentation
 ```
 
 ## Factories
@@ -70,6 +70,11 @@ $user->assignRole($roles->pluck('name')->all()) # Assign 2 random roles.
    - **PUT** `/users/{uuid}`: Edit the user.
    - **DELETE** `/users/{uuid}`: Delete the user.
 
+## Api Documentation
+
+- **GET** `/api-docs`: Get the api documention.
+- `php artisan l5-swagger:generate`: Generate the api docs.
+
 ## PHP Libraries
 
 - Laracasts Presenter [GitHub](https://github.com/laracasts/Presenter)
@@ -79,6 +84,7 @@ $user->assignRole($roles->pluck('name')->all()) # Assign 2 random roles.
 - Spatie Laravel Fractal [GitHub](https://github.com/spatie/laravel-fractal)
 - Spatie Laravel Query Builder [GitHub](https://github.com/spatie/laravel-query-builder) [Docs](https://spatie.be/docs/laravel-query-builder)
 - Spatie Permissions [Github](https://github.com/spatie/laravel-permission) [Docs](https://spatie.be/docs/laravel-permission)
+- Darka On Line Swagger [GitHub](https://github.com/DarkaOnLine/L5-Swagger)
 - FriendsOfPHP CS Fixer [GitHub](https://github.com/FriendsOfPHP/PHP-CS-Fixer) [Docs](https://cs.symfony.com/)
 - Laravel IDE Helper [GitHub](https://github.com/barryvdh/laravel-ide-helper)
 - Larastan [GitHub](https://github.com/nunomaduro/larastan) [Docs](https://phpstan.org/user-guide/getting-started)

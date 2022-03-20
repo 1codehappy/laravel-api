@@ -2,11 +2,12 @@
 
 namespace App\Backend\Api\Auth\Controllers;
 
+use App\Support\Auth\Contracts\Documentation\LogoutController as Documentation;
 use App\Support\Core\Api\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class LogoutController extends Controller
+class LogoutController extends Controller implements Documentation
 {
     /**
      * Log the user out (Invalidate the token).

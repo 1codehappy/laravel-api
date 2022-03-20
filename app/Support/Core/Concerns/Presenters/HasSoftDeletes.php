@@ -1,8 +1,8 @@
 <?php
 
-namespace Hire\Support\Concerns\Presenters;
+namespace App\Support\Core\Concerns\Presenters;
 
-use Hire\Support\Facades\Timezone;
+use Illuminate\Support\Carbon;
 
 trait HasSoftDeletes
 {
@@ -14,8 +14,7 @@ trait HasSoftDeletes
     public function deletedAt(): ?string
     {
         return $this->deleted_at ?
-            Timezone::create($this->deleted_at)->toDateTimeString()
-        :
+            Carbon::create($this->deleted_at)->toDateTimeString() :
             null;
     }
 }

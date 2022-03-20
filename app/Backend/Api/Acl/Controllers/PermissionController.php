@@ -5,11 +5,12 @@ namespace App\Backend\Api\Acl\Controllers;
 use App\Backend\Api\Acl\Transformers\PermissionTransformer;
 use App\Domain\Acl\Actions\PaginatePermission;
 use App\Domain\Acl\Models\Permission;
+use App\Support\Acl\Contracts\Documentation\PermissionController as Documentation;
 use App\Support\Core\Api\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class PermissionController extends Controller
+class PermissionController extends Controller implements Documentation
 {
     /**
      * Apply policies.

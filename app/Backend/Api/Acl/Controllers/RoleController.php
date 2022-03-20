@@ -9,13 +9,14 @@ use App\Domain\Acl\Actions\DeleteRole;
 use App\Domain\Acl\Actions\EditRole;
 use App\Domain\Acl\Actions\PaginateRole;
 use App\Domain\Acl\Models\Role;
+use App\Support\Acl\Contracts\Documentation\RoleController as Documentation;
 use App\Support\Acl\DTOs\RoleDto;
 use App\Support\Core\Api\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class RoleController extends Controller
+class RoleController extends Controller implements Documentation
 {
     /**
      * Apply policies.

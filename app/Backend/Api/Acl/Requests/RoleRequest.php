@@ -2,9 +2,10 @@
 
 namespace App\Backend\Api\Acl\Requests;
 
+use App\Support\Acl\Contracts\Documentation\RoleRequest as Documentation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleRequest extends FormRequest
+class RoleRequest extends FormRequest implements Documentation
 {
     /**
      * Determine if the user is authorized to make this request.
