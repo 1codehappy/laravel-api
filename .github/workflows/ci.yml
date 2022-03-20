@@ -1,7 +1,7 @@
 on: push
 name: CI
 jobs:
-  php-8.1:
+  php-81:
     runs-on: ubuntu-latest
     container:
       image: kirschbaumdevelopment/laravel-test-runner:8.1
