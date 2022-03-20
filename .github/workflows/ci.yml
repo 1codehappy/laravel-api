@@ -1,10 +1,10 @@
 on: push
 name: CI
 jobs:
-  pipeline:
+  php-8.1:
     runs-on: ubuntu-latest
     container:
-      image: kirschbaumdevelopment/laravel-test-runner:8.0
+      image: kirschbaumdevelopment/laravel-test-runner:8.1
 
     steps:
     - uses: actions/checkout@v1
