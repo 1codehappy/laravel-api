@@ -7,17 +7,25 @@ use function Pest\Faker\faker;
 uses(RefreshDatabase::class);
 
 it('gets the user data.', function () {
-    $user = User::factory()->create();
-    $user->givePermissionTo('users.view');
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('users.view');
     $roles = Role::factory()->count(2)->create();
     $permissions = Permission::factory()->count(3)->create();
 
     $employee = User::factory()->create();
     $employee->assignRole($roles->pluck('name')->all());
     $employee->givePermissionTo($permissions->pluck('name')->all());
-    $response = $this->withHeaders(authHeader($user))
-        ->get("/users/{$employee->uuid}");
-    $response->assertStatus(200)
+    $expectedRoles = $roles
+        ->map(fn ($role) => ['id' => $role->uuid, 'name' => $role->name])
+        ->all();
+    $expectedPermissions = $permissions
+        ->map(fn (Permission $permission) => ['id' => $permission->uuid, 'name' => $permission->name])
+        ->all();
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', "/users/{$employee->uuid}")
+        ->assertStatus(200)
         ->assertJson([
             'data' => [
                 'id' => $employee->uuid,
@@ -25,8 +33,8 @@ it('gets the user data.', function () {
                 'email' => $employee->email,
                 'created_at' => $employee->created_at,
                 'updated_at' => $employee->updated_at,
-                'roles' => $roles->map(fn (Role $role) => ['id' => $role->uuid, 'name' => $role->name])->all(),
-                'permissions' => $permissions->map(fn (Permission $permission) => ['id' => $permission->uuid, 'name' => $permission->name])->all(),
+                'roles' => $expectedRoles,
+                'permissions' => $expectedPermissions,
             ],
         ]);
 });
@@ -34,16 +42,19 @@ it('gets the user data.', function () {
 it('can\'t get the user.', function () {
     $user = User::factory()->create();
     $employee = User::factory()->create();
-    $response = $this->withHeaders(authHeader($user))
-        ->get("/users/{$employee->uuid}");
-    $response->assertStatus(403);
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', "/users/{$employee->uuid}")
+        ->assertStatus(403);
 });
 
 it('doesn\'t exist.', function () {
-    $user = User::factory()->create();
-    $user->givePermissionTo('users.view');
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('users.view');
     $uuid = faker()->uuid;
-    $response = $this->withHeaders(authHeader($user))
-        ->get("/users/{$uuid}");
-    $response->assertStatus(404);
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', "/users/{$uuid}")
+        ->assertStatus(404);
 });

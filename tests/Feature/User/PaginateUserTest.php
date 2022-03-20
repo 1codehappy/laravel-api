@@ -5,15 +5,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 it('paginates the user list.', function () {
-    $user = User::factory()->create();
-    $user->givePermissionTo('users.viewAny');
-
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('users.viewAny');
     User::factory()
         ->count(5)
         ->create();
-    $response = $this->withHeaders(authHeader($user))
-        ->get('/users?per_page=5&page=2');
-    $response->assertStatus(200);
+
+    $response = $this->withToken(Auth::login($user))
+        ->json('GET', '/users?per_page=5&page=2')
+        ->assertStatus(200);
     $jsonResponse = json_decode($response->getContent(), true);
     $this->assertArrayHasKey('data', $jsonResponse);
     $this->assertArrayHasKey('meta', $jsonResponse);
@@ -32,20 +33,22 @@ it('paginates the user list.', function () {
 
 it('can\'t paginate the user list.', function () {
     $user = User::factory()->create();
-    $response = $this->withHeaders(authHeader($user))
-        ->get('/users');
-    $response->assertStatus(403);
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', '/users')
+        ->assertStatus(403);
 });
 
 it('finds by name partially.', function () {
-    $user = User::factory()->create();
-    $user->givePermissionTo('users.viewAny');
+    $user = User::factory()
+        ->create()        ->givePermissionTo('users.viewAny');
 
     $bob = User::factory()->create(['name' => 'Bob Marley']);
     User::factory()->create(['name' => 'Peter Tosh']);
-    $response = $this->withHeaders(authHeader($user))
-        ->get('/users?filter[name]=bob');
-    $response->assertStatus(200)
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', '/users?filter[name]=bob')
+        ->assertStatus(200)
         ->assertJson([
             'data' => [
                 [
@@ -72,14 +75,15 @@ it('finds by name partially.', function () {
 });
 
 it('finds by email.', function () {
-    $user = User::factory()->create();
-    $user->givePermissionTo('users.viewAny');
-
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('users.viewAny');
     User::factory()->create(['email' => 'bob@test.com']);
     $peter = User::factory()->create(['email' => 'peter@test.com']);
-    $response = $this->withHeaders(authHeader($user))
-        ->get('/users?filter[email]=peter@test.com');
-    $response->assertStatus(200)
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', '/users?filter[email]=peter@test.com')
+        ->assertStatus(200)
         ->assertJson([
             'data' => [
                 [
@@ -106,14 +110,15 @@ it('finds by email.', function () {
 });
 
 it('can\'t find by email partially.', function () {
-    $user = User::factory()->create();
-    $user->givePermissionTo('users.viewAny');
-
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('users.viewAny');
     User::factory()->create(['email' => 'bob@test.com']);
     User::factory()->create(['email' => 'peter@test.com']);
-    $response = $this->withHeaders(authHeader($user))
-        ->get('/users?filter[email]=bob');
-    $response->assertStatus(200)
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', '/users?filter[email]=bob')
+        ->assertStatus(200)
         ->assertJson([
             'data' => [],
             'meta' => [
@@ -130,11 +135,12 @@ it('can\'t find by email partially.', function () {
 });
 
 it('sorts', function (string $sortString) {
-    $user = User::factory()->create();
-    $user->givePermissionTo('users.viewAny');
-
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('users.viewAny');
     User::factory()->count(5)->create();
-    $response = $this->withHeaders(authHeader($user))
-        ->get("/users?sort=$sortString");
-    $response->assertStatus(200);
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', "/users?sort=$sortString")
+        ->assertStatus(200);
 })->with('user-sorts');

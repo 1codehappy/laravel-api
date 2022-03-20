@@ -7,31 +7,34 @@ use function Pest\Faker\faker;
 uses(RefreshDatabase::class);
 
 it('deletes the user.', function () {
-    $user = User::factory()->create();
-    $user->givePermissionTo('users.delete');
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('users.delete');
 
     $employee = User::factory()->create();
-    $response = $this->withHeaders(authHeader($user))
-        ->delete("/users/{$employee->uuid}");
-    $response->assertStatus(204);
-    $this->assertDatabaseMissing(
-        'users',
-        ['id' => $employee->id]
-    );
+    $this->withToken(Auth::login($user))
+        ->json('DELETE', "/users/{$employee->uuid}")
+        ->assertStatus(204);
+
+    $this->assertDatabaseMissing('users', ['id' => $employee->id]);
 });
 
 it('can\'t delete the user.', function () {
     $user = User::factory()->create();
     $employee = User::factory()->create();
-    $response = $this->withHeaders(authHeader($user))
-        ->delete("/users/{$employee->uuid}");
-    $response->assertStatus(403);
+
+    $this->withToken(Auth::login($user))
+        ->json('DELETE', "/users/{$employee->uuid}")
+        ->assertStatus(403);
 });
 
 it('doesn\'t exist.', function () {
-    $user = User::factory()->create();
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('users.delete');
     $uuid = faker()->uuid;
-    $response = $this->withHeaders(authHeader($user))
-        ->delete("/users/{$uuid}");
-    $response->assertStatus(404);
+
+    $this->withToken(Auth::login($user))
+        ->json('DELETE', "/users/{$uuid}")
+        ->assertStatus(404);
 });

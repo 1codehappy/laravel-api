@@ -5,12 +5,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 it('paginates the permission list.', function () {
-    $user = User::factory()->create();
-    $user->givePermissionTo('permissions.viewAny');
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('permissions.viewAny');
 
-    $response = $this->withHeaders(authHeader($user))
-        ->get('/permissions');
-    $response->assertStatus(200);
+    $response = $this->withToken(Auth::login($user))
+        ->json('GET', '/permissions')
+        ->assertStatus(200);
+
     $jsonResponse = json_decode($response->getContent(), true);
     $this->assertArrayHasKey('data', $jsonResponse);
     $this->assertArrayHasKey('meta', $jsonResponse);
@@ -26,29 +28,32 @@ it('paginates the permission list.', function () {
 
 it('can\'t paginate the permission list.', function () {
     $user = User::factory()->create();
-    $response = $this->withHeaders(authHeader($user))
-        ->get('/permissions');
-    $response->assertStatus(403);
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', '/permissions')
+        ->assertStatus(403);
 });
 
 it('finds by name partially.', function () {
-    $user = User::factory()->create();
-    $user->givePermissionTo('permissions.viewAny');
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('permissions.viewAny');
 
-    $response = $this->withHeaders(authHeader($user))
-        ->get('/permissions?filter[name]=users');
-    $response->assertStatus(200);
+    $response = $this->withToken(Auth::login($user))
+        ->json('GET', '/permissions?filter[name]=users')
+        ->assertStatus(200);
+
     $jsonResponse = json_decode($response->getContent(), true);
     $this->assertEquals(5, $jsonResponse['meta']['pagination']['total']);
     $this->assertEquals(5, $jsonResponse['meta']['pagination']['count']);
 });
 
 it('sorts', function (string $sortString) {
-    $user = User::factory()->create();
-    $user->givePermissionTo('permissions.viewAny');
+    $user = User::factory()
+        ->create()
+        ->givePermissionTo('permissions.viewAny');
 
-    User::factory()->count(5)->create();
-    $response = $this->withHeaders(authHeader($user))
-        ->get("/permissions?sort=$sortString");
+    $response = $this->withToken(Auth::login($user))
+        ->json('GET', "/permissions?sort=$sortString");
     $response->assertStatus(200);
 })->with('permission-sorts');

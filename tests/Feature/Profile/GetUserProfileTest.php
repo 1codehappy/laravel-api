@@ -5,24 +5,35 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 it('can show the user profile.', function () {
-    $user = User::factory()->create();
+    $user = User::factory()
+        ->hasRoles()
+        ->hasPermissions()
+        ->create();
+    $expectedRoles = $user
+        ->roles
+        ->map(fn ($role) => ['id' => $role->uuid, 'name' => $role->name])
+        ->all();
+    $expectedPermissions = $user
+        ->permissions
+        ->map(fn ($permission) => ['id' => $permission->uuid, 'name' => $permission->name])
+        ->all();
 
-    $response = $this->withHeaders(authHeader($user))
-        ->get('/auth/me');
-    $response->assertStatus(200)
+    $this->withToken(Auth::login($user))
+        ->json('GET', '/auth/me')
+        ->assertStatus(200)
         ->assertJson([
             'data' => [
                 'id' => $user->uuid,
                 'name' => $user->name,
                 'email' => $user->email,
-                'roles' => $user->roles->pluck('uuid')->toArray(),
-                'permissions' => $user->roles->pluck('permissions')->toArray(),
+                'roles' => $expectedRoles,
+                'permissions' => $expectedPermissions,
             ],
         ]);
 });
 
 it('can\'t show the user profile.', function () {
-    $response = $this->get('/auth/me');
-    $response->assertStatus(401)
+    $this->json('GET', '/auth/me')
+        ->assertStatus(401)
         ->assertJson([ 'message' => 'Unauthenticated.' ]);
 });
