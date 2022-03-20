@@ -1,12 +1,14 @@
 # Laravel Api
 
+[![CircleCI](https://circleci.com/gh/1codehappy/laravel-api.svg?style=shield)](https://circleci.com/gh/1codehappy/laravel-api)
+
 A simple, a modern and an elegant Laravel boilerpate for your api, applying Domain Driven Design and hexagonal architecture principles based on [Laravel Beyond Crud](https://laravel-beyond-crud.com/).
 
 ## Features
 
 - PHP 8.1+
 - Laravel 9 [Github](https://github.com/laravel/framework) [Docs](https://laravel.com/docs/)
-- GitHub Actions [CI](https://github.com/1codehappy/laravel-api/actions)
+- CircleCI [Site](https://circleci.com/gh/1codehappy/laravel-api)
 - Api restful
 - JWT Auth
 - ACL & Laravel Policies
