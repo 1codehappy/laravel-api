@@ -9,7 +9,7 @@ class DataArraySerializer extends BaseSerializer
     /**
      * {@inheritDoc}
      */
-    public function mergeIncludes($transformedData, $includedData)
+    public function mergeIncludes(array $transformedData, array $includedData): array
     {
         $includedData = array_map(function ($include) {
             return $include['data'];
