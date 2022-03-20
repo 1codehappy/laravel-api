@@ -4,6 +4,7 @@ A simple, a modern and an elegant Laravel boilerpate for your api, applying Doma
 
 ## Features
 
+- PHP 8.1+
 - Laravel 9 [Github](https://github.com/laravel/framework) [Docs](https://laravel.com/docs/)
 - GitHub Actions [CI](https://github.com/1codehappy/laravel-api/actions)
 - Api restful
