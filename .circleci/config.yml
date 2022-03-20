@@ -5,7 +5,7 @@ workflows:
     jobs:
       - test-with-preinstalled-php:
           name: PHP 8.1
-          docker-image: circleci/php:8.1-node-browsers
+          docker-image: php:8.1-cli-alpine
 
 jobs:
   test-with-preinstalled-php:
@@ -29,8 +29,7 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo docker-php-ext-install zip
+      - run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
       # Download and cache dependencies
       - restore_cache:
@@ -40,7 +39,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: php /usr/local/bin/composer install -n --prefer-dist
+      - run: composer install -n --prefer-dist
 
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
