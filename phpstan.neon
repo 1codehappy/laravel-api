@@ -15,7 +15,6 @@ parameters:
 
   # Github actions?
   excludePaths:
-    - app/Backend/Api/User/Transformers/UserTransformer.php
     - app/Support/Core/Concerns/Transformers/DataArraySerializer.php
 
   checkMissingIterableValueType: false

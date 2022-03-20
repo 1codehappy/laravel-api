@@ -15,11 +15,14 @@ class UserTransformer extends TransformerAbstract
     use AddsTransformerCapabilities;
 
     /**
-     * Default includes.
+     * Add default includes.
      *
-     * @var array
+     * @return void
      */
-    protected $defaultIncludes = ['roles', 'permissions'];
+    public function __construct()
+    {
+        $this->setDefaultIncludes(['roles', 'permissions']);
+    }
 
     /**
      * A Fractal transformer.

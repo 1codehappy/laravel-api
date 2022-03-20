@@ -13,11 +13,14 @@ class RoleTransformer extends TransformerAbstract
     use AddsTransformerCapabilities;
 
     /**
-     * Default includes.
+     * Add default includes.
      *
-     * @var array
+     * @return void
      */
-    protected $defaultIncludes = ['permissions'];
+    public function __construct()
+    {
+        $this->setDefaultIncludes(['permissions']);
+    }
 
     /**
      * A Fractal transformer.
