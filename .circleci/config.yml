@@ -39,6 +39,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
+      - run: cp .env.ci .env
       - run: composer install -n --prefer-dist
 
       - save_cache:
@@ -47,7 +48,6 @@ jobs:
             - ./vendor
 
       # prepare the database
-      - run: cp .env.ci .env
       - run: php artisan migrate --force
       - run: php artisan key:generate
       - run: php artisan jwt:secret
