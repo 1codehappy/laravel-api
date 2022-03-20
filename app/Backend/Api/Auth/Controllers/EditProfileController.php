@@ -2,7 +2,7 @@
 
 namespace App\Backend\Api\Auth\Controllers;
 
-use App\Backend\Api\Auth\Requests\ProfileUpdate;
+use App\Backend\Api\Auth\Requests\EditProfileRequest;
 use App\Backend\Api\User\Transformers\UserTransformer;
 use App\Domain\User\Actions\EditUser;
 use App\Support\Core\Api\Controllers\Controller;
@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\DB;
 class EditProfileController extends Controller
 {
     /**
-     * Edit user's profile
+     * Edit the user's profile.
      *
-     * @param ProfileUpdate $request
+     * @param EditProfileRequest $request
      * @return JsonResponse
      */
     public function __invoke(
-        ProfileUpdate $request,
+        EditProfileRequest $request,
         EditUser $action
     ): JsonResponse {
         /** @var \App\Domain\User\Models\User $user */

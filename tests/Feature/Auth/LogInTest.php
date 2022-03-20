@@ -6,21 +6,14 @@ uses(RefreshDatabase::class);
 
 it('generates the jwt token.', function () {
     $user = User::factory()->create();
+    $payload = ['email' => $user->email, 'password' => 'password'];
 
-    $response = $this->post('/auth/login', [
-        'email' => $user->email,
-        'password' => 'password',
-    ]);
-    $response->assertStatus(201)
-        ->assertJson([
-            'message' => 'Token generated.',
-            'data' => [
-                'token_type' => 'Bearer',
-            ],
-        ]);
+    $this->json('POST', '/auth/login', $payload)
+        ->assertStatus(201)
+        ->assertJson(['message' => 'Token generated.', 'data' => ['token_type' => 'Bearer']]);
 });
 
 it('validates payload to the user log in', function (array $payload) {
-    $response = $this->post('/auth/login', $payload);
-    $response->assertStatus(422);
+    $this->json('POST', '/auth/login', $payload)
+        ->assertStatus(422);
 })->with('login-payloads');

@@ -2,7 +2,7 @@
 
 namespace App\Backend\Api\User\Controllers;
 
-use App\Backend\Api\User\Request\UserRequest;
+use App\Backend\Api\User\Requests\UserRequest;
 use App\Backend\Api\User\Transformers\UserTransformer;
 use App\Domain\User\Actions\CreateUser;
 use App\Domain\User\Actions\DeleteUser;
@@ -10,12 +10,13 @@ use App\Domain\User\Actions\EditUser;
 use App\Domain\User\Actions\PaginateUser;
 use App\Domain\User\Models\User;
 use App\Support\Core\Api\Controllers\Controller;
+use App\Support\User\Contracts\Documentation\UserController as Documentation;
 use App\Support\User\DTOs\UserDto;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class UserController extends Controller
+class UserController extends Controller implements Documentation
 {
     /**
      * Apply policies.

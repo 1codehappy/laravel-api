@@ -7,14 +7,22 @@ uses(RefreshDatabase::class);
 it('was logged out successfully.', function () {
     $user = User::factory()->create();
 
-    $response = $this->withHeaders(authHeader($user))
-        ->post('/auth/logout');
-    $response->assertStatus(200)
+    $this->withToken(Auth::login($user))
+        ->json('POST', '/auth/logout')
+        ->assertStatus(200)
         ->assertJson([ 'message' => 'You\'re logged out successfully.' ]);
 });
 
 it('can\'t log out.', function () {
-    $response = $this->post('/auth/logout');
-    $response->assertStatus(401)
+    $this->json('POST', '/auth/logout')
+        ->assertStatus(401)
         ->assertJson([ 'message' => 'Unauthenticated.' ]);
+});
+
+it('isn\'t possible to log out by GET.', function () {
+    $user = User::factory()->create();
+
+    $this->withToken(Auth::login($user))
+        ->json('GET', '/auth/logout')
+        ->assertStatus(405);
 });
