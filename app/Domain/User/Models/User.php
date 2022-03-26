@@ -73,9 +73,7 @@ class User extends Authenticatable implements JWTSubject, CanResetPassword
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * {@inheritDoc}
      */
     protected $hidden = [
         'password',
@@ -83,9 +81,7 @@ class User extends Authenticatable implements JWTSubject, CanResetPassword
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * {@inheritDoc}
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
