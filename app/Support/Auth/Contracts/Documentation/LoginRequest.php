@@ -7,7 +7,7 @@ use OpenApi\Attributes as OA;
 #[OA\Schema(
     schema: "LoginRequest",
     type: "object",
-    description: "Request data to generate a valid token to authenticate.",
+    description: "Request data to generate a valid token.",
     required: ["email", "password"],
     properties: [
         new OA\Property(

@@ -16,6 +16,7 @@
         "darkaonline/l5-swagger": "^8.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "itsgoingd/clockwork": "^5.1",
         "jessarcher/laravel-castable-data-transfer-object": "^2.1",
         "laracasts/presenter": "dev-chore/laravel-9",
         "laravel/framework": "^9.0",
@@ -104,6 +105,7 @@
         "analyse": "./vendor/bin/phpstan analyse --memory-limit=2G",
         "test": "./vendor/bin/pest ./tests --parallel",
         "sec": "./vendor/bin/security-checker security:check composer.lock",
+        "doc": "@php artisan l5-swagger:generate",
         "code": [
             "@cs",
             "@analyse",

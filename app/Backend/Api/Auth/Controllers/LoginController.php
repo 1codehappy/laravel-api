@@ -4,10 +4,11 @@ namespace App\Backend\Api\Auth\Controllers;
 
 use App\Backend\Api\Auth\Concerns\UsesTokenResponse;
 use App\Backend\Api\Auth\Requests\LoginRequest;
+use App\Domain\Auth\Actions\Login;
 use App\Support\Auth\Contracts\Documentation\LoginController as Documentation;
+use App\Support\Auth\DTOs\LoginDto;
 use App\Support\Core\Api\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller implements Documentation
 {
@@ -17,15 +18,15 @@ class LoginController extends Controller implements Documentation
      * Get a JWT via given credentials.
      *
      * @param LoginRequest $request
+     * @param Login $action
      * @return JsonResponse
      */
-    public function __invoke(LoginRequest $request): JsonResponse
+    public function __invoke(LoginRequest $request, Login $action): JsonResponse
     {
-        $credentials = $request->validated();
-
-        if (! $token = Auth::attempt($credentials)) {
+        $dto = LoginDto::fromRequest($request);
+        if (! $token = $action->execute($dto)) {
             return response()
-                ->json(['message' => 'Invalid credentials.'], 401);
+                ->json(['message' => __('auth.failed')], 401);
         }
 
         return $this->respondWithToken($token);

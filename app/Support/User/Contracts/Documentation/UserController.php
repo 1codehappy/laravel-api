@@ -59,8 +59,7 @@ interface UserController
                 in: "query",
                 schema: new OA\Schema(type: "integer", format: "int32")
             ),
-        ],
-        security: ["bearerAuth" => []]
+        ]
     )]
     #[OA\Response(
         response: 200,
@@ -118,8 +117,7 @@ interface UserController
                 in: "path",
                 schema: new OA\Schema(type: "string", example: "75a0f2d3-a0d3-4b0b-b02f-65e70656361d")
             ),
-        ],
-        security: ["bearerAuth" => []]
+        ]
     )]
     #[OA\Response(
         response: 200,
@@ -248,8 +246,7 @@ interface UserController
                     schema: new OA\Schema(ref: "#/components/schemas/UserRequest")
                 ),
             ]
-        ),
-        security: ["bearerAuth" => []]
+        )
     )]
     #[OA\Response(
         response: 200,
@@ -310,8 +307,7 @@ interface UserController
                 in: "path",
                 schema: new OA\Schema(type: "string", example: "75a0f2d3-a0d3-4b0b-b02f-65e70656361d")
             ),
-        ],
-        security: ["bearerAuth" => []]
+        ]
     )]
     #[OA\Response(
         response: 204,

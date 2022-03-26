@@ -20,7 +20,7 @@ A simple, a modern and an elegant Laravel boilerpate for your api, applying Doma
 Create your project using composer.
 
 ```bash
-composer create-project 1codehappy/laravel-api api
+composer create-project 1codehappy/laravel-api myApi
 ```
 
 ## Directories
@@ -51,6 +51,8 @@ $user->assignRole($roles->pluck('name')->all()) # Assign 2 random roles.
 
 ## Routes
 
+**GET** `/api-docs`:
+
 - **Authentication:**
    - **POST** `/auth/login`: Sign in.
    - **POST** `/auth/logout`: Sign out.
@@ -75,12 +77,16 @@ $user->assignRole($roles->pluck('name')->all()) # Assign 2 random roles.
 
 ## Api Documentation
 
-- **GET** `/api-docs`: Get the api documention.
-- `php artisan l5-swagger:generate`: Generate the api docs.
+To generate the api documentation:
+
+```bash
+php artisan l5-swagger:generate # or `composer doc`
+```
 
 ## PHP Libraries
 
 - Laracasts Presenter [GitHub](https://github.com/laracasts/Presenter)
+- Clockwork [GitHub](https://github.com/itsgoingd/clockwork) [Docs](https://underground.works/clockwork/#documentation)
 - PHP Open Source Saver JWT [GitHub](https://github.com/php-open-source-saver/jwt-auth) [Docs](https://laravel-jwt-auth.readthedocs.io/en/latest/)
 - Jess Archer Castable [GitHub](https://github.com/jessarcher/laravel-castable-data-transfer-object)
 - Spatie Data Transfer Objects [GitHub](https://github.com/spatie/data-transfer-object)
@@ -96,12 +102,14 @@ $user->assignRole($roles->pluck('name')->all()) # Assign 2 random roles.
 
 ## Composer Scripts
 
-- `composer clear`: Clear laravel cache
-- `composer optimize`: Optimize api
-- `composer cs`: Fix coding style
-- `composer analyse`: Run larastan
-- `composer test`: Run pestphp
-- `composer sec`: Check the php libraries
+- `composer clear`: Clear laravel cache.
+- `composer optimize`: Optimize api.
+- `composer cs`: Fix coding style.
+- `composer analyse`: Run larastan.
+- `composer test`: Run pestphp.
+- `composer sec`: Check the php libraries.
+- `composer code`: Run `cs`, `analyse`, `test` and `sec`.
+- `composer doc`: Generate the api documentation.
 
 ---
 

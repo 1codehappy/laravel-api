@@ -5,6 +5,8 @@ namespace App\Domain\User\Models;
 use App\Domain\User\Database\Factories\UserFactory;
 use App\Domain\User\Presenters\UserPresenter;
 use App\Support\Core\Concerns\Models\HasUuid;
+use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,8 +44,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUuid($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, CanResetPassword
 {
+    use CanResetPasswordTrait;
     use HasFactory;
     use HasRoles;
     use HasUuid;
@@ -70,9 +73,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * {@inheritDoc}
      */
     protected $hidden = [
         'password',
@@ -80,9 +81,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * {@inheritDoc}
      */
     protected $casts = [
         'email_verified_at' => 'datetime',

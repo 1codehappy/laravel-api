@@ -9,7 +9,7 @@ it('refreshes the jwt token', function () {
     $this->withToken(Auth::login($user))
         ->json('POST', '/auth/refresh')
         ->assertStatus(201)
-        ->assertJson(['message' => 'Token generated.', 'data' => ['token_type' => 'Bearer']]);
+        ->assertJson(['message' => __('auth.success'), 'data' => ['token_type' => 'Bearer']]);
 });
 
 it('can\'t refresh the jwt token', function () {

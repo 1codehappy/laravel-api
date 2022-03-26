@@ -18,6 +18,6 @@ class LogoutController extends Controller implements Documentation
     {
         Auth::logout();
 
-        return response()->json(['message' => 'You\'re logged out successfully.']);
+        return response()->json(['message' => __('auth.logout')]);
     }
 }

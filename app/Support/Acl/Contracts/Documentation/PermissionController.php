@@ -47,8 +47,7 @@ interface PermissionController
                 in: "query",
                 schema: new OA\Schema(type: "integer", format: "int32")
             ),
-        ],
-        security: ["bearerAuth" => []]
+        ]
     )]
     #[OA\Response(
         response: 200,

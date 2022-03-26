@@ -52,8 +52,7 @@ interface RoleController
                 in: "query",
                 schema: new OA\Schema(type: "integer", format: "int32")
             ),
-        ],
-        security: ["bearerAuth" => []]
+        ]
     )]
     #[OA\Response(
         response: 200,
@@ -111,8 +110,7 @@ interface RoleController
                 in: "path",
                 schema: new OA\Schema(type: "string", example: "75a0f2d3-a0d3-4b0b-b02f-65e70656361d")
             ),
-        ],
-        security: ["bearerAuth" => []]
+        ]
     )]
     #[OA\Response(
         response: 200,
@@ -179,8 +177,7 @@ interface RoleController
                     schema: new OA\Schema(ref: "#/components/schemas/RoleRequest")
                 ),
             ]
-        ),
-        security: ["bearerAuth" => []]
+        )
     )]
     #[OA\Response(
         response: 201,
@@ -251,8 +248,7 @@ interface RoleController
                     schema: new OA\Schema(ref: "#/components/schemas/RoleRequest")
                 ),
             ]
-        ),
-        security: ["bearerAuth" => []]
+        )
     )]
     #[OA\Response(
         response: 200,
@@ -313,8 +309,7 @@ interface RoleController
                 in: "path",
                 schema: new OA\Schema(type: "string", example: "75a0f2d3-a0d3-4b0b-b02f-65e70656361d")
             ),
-        ],
-        security: ["bearerAuth" => []]
+        ]
     )]
     #[OA\Response(
         response: 204,

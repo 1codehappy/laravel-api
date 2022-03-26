@@ -10,7 +10,7 @@ it('generates the jwt token.', function () {
 
     $this->json('POST', '/auth/login', $payload)
         ->assertStatus(201)
-        ->assertJson(['message' => 'Token generated.', 'data' => ['token_type' => 'Bearer']]);
+        ->assertJson(['message' => __('auth.success'), 'data' => ['token_type' => 'Bearer']]);
 });
 
 it('validates payload to the user log in', function (array $payload) {

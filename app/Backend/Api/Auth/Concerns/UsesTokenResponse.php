@@ -17,7 +17,7 @@ trait UsesTokenResponse
     {
         return response()->json(
             [
-                'message' => 'Token generated.',
+                'message' => __('auth.success'),
                 'data' => [
                     'access_token' => $token,
                     'token_type' => 'Bearer',

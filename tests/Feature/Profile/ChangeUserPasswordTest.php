@@ -21,4 +21,4 @@ it('validates payload when changing the user\'s password', function (array $payl
     $this->withToken(Auth::login($user))
         ->json('PUT', '/auth/me/password', $payload)
         ->assertStatus(422);
-})->with('password-payloads');
+})->with('change-password-payloads');

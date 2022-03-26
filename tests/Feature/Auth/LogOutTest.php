@@ -10,13 +10,13 @@ it('was logged out successfully.', function () {
     $this->withToken(Auth::login($user))
         ->json('POST', '/auth/logout')
         ->assertStatus(200)
-        ->assertJson([ 'message' => 'You\'re logged out successfully.' ]);
+        ->assertJson(['message' => __('auth.logout')]);
 });
 
 it('can\'t log out.', function () {
     $this->json('POST', '/auth/logout')
         ->assertStatus(401)
-        ->assertJson([ 'message' => 'Unauthenticated.' ]);
+        ->assertJson(['message' => 'Unauthenticated.']);
 });
 
 it('isn\'t possible to log out by GET.', function () {
