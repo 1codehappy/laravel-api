@@ -31,7 +31,7 @@ class ChangePasswordController extends Controller implements Documentation
 
         return response()
             ->json([
-                'message' => 'Password updated.',
+                'message' => __('passwords.change'),
             ]);
     }
 }

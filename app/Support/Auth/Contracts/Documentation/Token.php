@@ -40,7 +40,7 @@ use OpenApi\Attributes as OA;
         ),
     ],
     example: [
-        "message" => "Token generated.",
+        "message" => "The access token has been created.",
         "data" => [
             "access_token" => "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkudGVuYW50MS5oaXJlZDM2NS5kb2NrZXIuaW50ZXJuYWxcL2xvZ2luIiwiaWF0IjoxNjAzNDc2NTE5LCJleHAiOjE2MDM0ODAxMTksIm5iZiI6MTYwMzQ3NjUxOSwianRpIjoiTlNkUXI0M2gzQTFLMWJRSiIsInN1YiI6MSwicHJ2IjoiMWM5OGY5ZmNlMjZkM2JhNDg0NGNkYmQ5M2MzNjcwZTViNGJkYzlmOSJ9.fPbaYuFhOMdrJdMGyGO01_02BzeAUXMO0gHFyDqPcY4",
             "token_type" => "Bearer",

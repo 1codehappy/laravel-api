@@ -170,6 +170,7 @@ return [
          * Domain Service Providers...
          */
         App\Domain\Acl\Providers\ServiceProvider::class,
+        App\Domain\Auth\Providers\ServiceProvider::class,
         App\Domain\FailedJob\Providers\ServiceProvider::class,
         App\Domain\User\Providers\ServiceProvider::class,
 
@@ -234,6 +235,12 @@ return [
         'DeleteRole' => App\Domain\Acl\Actions\DeleteRole::class,
         'EditRole' => App\Domain\Acl\Actions\EditRole::class,
 
+        # Actions - Auth Domain
+        'GetResetToken' => App\Domain\Auth\Actions\GetResetToken::class,
+        'Login' => App\Domain\Auth\Actions\Login::class,
+        'ResetPassword' => App\Domain\Auth\Actions\ResetPassword::class,
+        'SendResetLink' => App\Domain\Auth\Actions\SendResetLink::class,
+
         # Actions - User Domain
         'ChangePassword' => App\Domain\User\Actions\ChangePassword::class,
         'CreateUser' => App\Domain\User\Actions\CreateUser::class,
@@ -245,7 +252,11 @@ return [
         'RoleCollection' => App\Support\Acl\Collections\RoleCollection::class,
 
         # Data Transfer Objects
+        'EmailDto' => App\Support\Auth\DTOs\EmailDto::class,
+        'LoginDto' => App\Support\Auth\DTOs\LoginDto::class,
+        'PasswordDto' => App\Support\Auth\DTOs\PasswordDto::class,
         'PermissionDto' => App\Support\Acl\DTOs\PermissionDto::class,
+        'ResetTokenDto' => App\Support\Auth\DTOs\ResetTokenDto::class,
         'RoleDto' => App\Support\Acl\DTOs\RoleDto::class,
         'UserDto' => App\Support\User\DTOs\UserDto::class,
 

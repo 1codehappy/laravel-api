@@ -18,15 +18,14 @@ use OpenApi\Attributes as OA;
                 schema: new OA\Schema(ref: "#/components/schemas/ChangePasswordRequest")
             ),
         ]
-    ),
-    security: ["bearerAuth" => []]
+    )
 )]
 #[OA\Response(
     response: 200,
     description: "Ok.",
     content: new OA\JsonContent(
         ref: "#/components/schemas/JsonResponse",
-        example: ["message" => "Password changed successfully"]
+        example: ["message" => "Your password has been changed."]
     )
 )]
 #[OA\Response(

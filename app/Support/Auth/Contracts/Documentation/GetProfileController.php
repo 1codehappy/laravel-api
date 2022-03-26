@@ -9,8 +9,7 @@ use OpenApi\Attributes as OA;
     operationId: "getProfile",
     summary: "Get the user's profile.",
     description: "Display the user's profile.",
-    tags: ['Logged User'],
-    security: ["bearerAuth" => []]
+    tags: ['Logged User']
 )]
 #[OA\Response(
     response: 200,

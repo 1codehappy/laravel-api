@@ -1,6 +1,6 @@
 <?php
 
-dataset('password-payloads', function () {
+dataset('change-password-payloads', function () {
     return [
         ['password - null' => ['password' => null, 'password_confirmation' => 'secret1234']],
         ['password - empty' => ['password' => '', 'password_confirmation' => 'password']],

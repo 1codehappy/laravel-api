@@ -9,8 +9,7 @@ use OpenApi\Attributes as OA;
     operationId: "refreshToken",
     summary: "Refresh the token.",
     description: "Logged users are able to refresh the JWT Token.",
-    tags: ["Auth"],
-    security: ["bearerAuth" => []]
+    tags: ["Auth"]
 )]
 #[OA\Response(
     response: 201,

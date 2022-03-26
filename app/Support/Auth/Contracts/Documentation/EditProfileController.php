@@ -23,8 +23,7 @@ interface EditProfileController
                     schema: new OA\Schema(ref: "#/components/schemas/EditProfileRequest")
                 ),
             ]
-        ),
-        security: ["bearerAuth" => []]
+        )
     )]
     #[OA\Response(
         response: 200,

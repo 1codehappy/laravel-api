@@ -125,9 +125,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             }
         },
@@ -243,9 +240,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             },
             "post": {
@@ -334,9 +328,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             }
         },
@@ -429,9 +420,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             },
             "put": {
@@ -532,9 +520,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             },
             "delete": {
@@ -599,9 +584,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             }
         },
@@ -632,7 +614,7 @@
                                     "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "message": "Password changed successfully"
+                                    "message": "Your password has been changed."
                                 }
                             }
                         }
@@ -671,9 +653,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             }
         },
@@ -719,9 +698,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             },
             "put": {
@@ -788,6 +764,59 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "/auth/forgot-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Send reset link.",
+                "description": "Send reset link to reset the password.",
+                "operationId": "forgotPassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ForgotPasswordRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Your password has been reset!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "email": [
+                                            "The selected email is invalid."
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
                 },
                 "security": {
                     "bearerAuth": {}
@@ -830,9 +859,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/JsonResponse"
-                                },
-                                "example": {
-                                    "message": "Invalid credentials."
                                 }
                             }
                         }
@@ -858,6 +884,9 @@
                             }
                         }
                     }
+                },
+                "security": {
+                    "bearerAuth": {}
                 }
             }
         },
@@ -878,7 +907,7 @@
                                     "$ref": "#/components/schemas/JsonResponse"
                                 },
                                 "example": {
-                                    "message": "You've logged out successfully."
+                                    "message": "You've been logged out."
                                 }
                             }
                         }
@@ -896,9 +925,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             }
         },
@@ -930,6 +956,59 @@
                                 },
                                 "example": {
                                     "message": "Unauthenticated."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/reset-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Reset the user's password.",
+                "description": "Reset the password.",
+                "operationId": "resetPassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResetPasswordRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "Your password has been reset!"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonResponse"
+                                },
+                                "example": {
+                                    "message": "The given data was invalid.",
+                                    "errors": {
+                                        "email": [
+                                            "The selected email is invalid."
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -1061,9 +1140,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             },
             "post": {
@@ -1235,9 +1311,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             },
             "put": {
@@ -1338,9 +1411,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             },
             "delete": {
@@ -1405,9 +1475,6 @@
                             }
                         }
                     }
-                },
-                "security": {
-                    "bearerAuth": {}
                 }
             }
         }
@@ -1571,8 +1638,25 @@
                     "email": "olamundo@gmail.com"
                 }
             },
+            "ForgotPasswordRequest": {
+                "description": "Request data for sending a reset link to the user.",
+                "required": [
+                    "email"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "The email of the user.",
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "email": "olamundo@gmail.com"
+                }
+            },
             "LoginRequest": {
-                "description": "Request data to generate a valid token to authenticate.",
+                "description": "Request data to generate a valid token.",
                 "required": [
                     "email",
                     "password"
@@ -1592,6 +1676,40 @@
                 "example": {
                     "email": "olamundo@gmail.com",
                     "password": "secret1234"
+                }
+            },
+            "ResetPasswordRequest": {
+                "description": "Request data for changing user's password.",
+                "required": [
+                    "token",
+                    "email",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "token": {
+                        "description": "The token to reset the password.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The email of the user.",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The new password of the user.",
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "description": "The password confirmation of the user.",
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "token": "",
+                    "email": "olamundo@gmail.com",
+                    "password": "newsecret1234",
+                    "password_confirmation": "newsecret1234"
                 }
             },
             "Token": {
@@ -1627,7 +1745,7 @@
                 },
                 "type": "object",
                 "example": {
-                    "message": "Token generated.",
+                    "message": "The access token has been created.",
                     "data": {
                         "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkudGVuYW50MS5oaXJlZDM2NS5kb2NrZXIuaW50ZXJuYWxcL2xvZ2luIiwiaWF0IjoxNjAzNDc2NTE5LCJleHAiOjE2MDM0ODAxMTksIm5iZiI6MTYwMzQ3NjUxOSwianRpIjoiTlNkUXI0M2gzQTFLMWJRSiIsInN1YiI6MSwicHJ2IjoiMWM5OGY5ZmNlMjZkM2JhNDg0NGNkYmQ5M2MzNjcwZTViNGJkYzlmOSJ9.fPbaYuFhOMdrJdMGyGO01_02BzeAUXMO0gHFyDqPcY4",
                         "token_type": "Bearer",
@@ -1651,6 +1769,52 @@
                     }
                 },
                 "type": "object"
+            },
+            "Pagination": {
+                "description": "The structure of the pagination.",
+                "properties": {
+                    "total": {
+                        "description": "The total of records affected.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "count": {
+                        "description": "The counting of displayed records.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "per_page": {
+                        "description": "The maximun records displayed per page.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "current_page": {
+                        "description": "The number of current page.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "total_pages": {
+                        "description": "The total of pages.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "links": {
+                        "description": "The urls for these links.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "total": 1,
+                    "count": 1,
+                    "per_page": 1,
+                    "current_page": 1,
+                    "total_pages": 1,
+                    "links": []
+                }
             },
             "User": {
                 "description": "The schema of the user.",
@@ -1759,6 +1923,8 @@
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
                 "bearerFormat": "JWT",
                 "scheme": "bearer"
             }

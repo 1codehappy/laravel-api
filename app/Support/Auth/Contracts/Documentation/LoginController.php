@@ -19,7 +19,8 @@ use OpenApi\Attributes as OA;
                 schema: new OA\Schema(ref: "#/components/schemas/LoginRequest")
             ),
         ]
-    )
+    ),
+    security: ["bearerAuth" => []]
 )]
 #[OA\Response(
     response: 201,
@@ -33,7 +34,7 @@ use OpenApi\Attributes as OA;
     description: "Unauthorized.",
     content: new OA\JsonContent(
         ref: "#/components/schemas/JsonResponse",
-        example: ["message" => "Invalid credentials."]
+        // example: ["message" => __("auth.failed")]
     )
 )]
 #[OA\Response(
